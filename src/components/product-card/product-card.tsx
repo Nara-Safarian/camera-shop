@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
 import { CameraCard } from '../../types/camera-card';
 
-function ProductCard({id, previewImgWebp, previewImgWebp2x, previewImg2x, previewImg, name, reviewCount, price}: CameraCard): JSX.Element {
+type ProductCardProps = {
+  product: CameraCard;
+  isActive?: boolean;
+}
+
+function ProductCard({product, isActive}: ProductCardProps): JSX.Element {
+  const {id, previewImgWebp, previewImgWebp2x, previewImg2x, previewImg, name, reviewCount, price} = product;
+
   return (
-    <div className="product-card">
+    <div className={`product-card ${isActive ? 'is-active' : ''}`}>
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}/>

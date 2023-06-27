@@ -4,12 +4,17 @@ export enum AppRoute {
   Basket = '/orders'
 }
 
+
 export enum NameSpace {
   Products = 'PRODUCTS',
-  Banner = 'BANNER'
+  Banner = 'BANNER',
+  ProductCard = 'PRODUCT_CARD',
+  Reviews = 'REVIEWS',
 }
 
 export enum APIRoute {
   Banner = '/promo',
-  Products = '/cameras'
+  Products = '/cameras',
+  Reviews = '/reviews',
+  Similar = '/similar'
 }

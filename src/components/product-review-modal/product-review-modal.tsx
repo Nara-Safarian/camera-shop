@@ -1,16 +1,71 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { postReviewForCamera } from '../../store/api-actions';
+import useEscapeFromModal from '../../hooks/use-escape-from-modal';
+import useLockScroll from '../../hooks/use-lock-scroll';
 
 type ProductReviewModalProps = {
   isActive: boolean;
   onClose: () => void;
   onSubmit: () => void;
+  cameraId: string;
 }
 
-function ProductReviewModal({isActive, onClose, onSubmit}: ProductReviewModalProps): JSX.Element {
+function ProductReviewModal({isActive, onClose, cameraId, onSubmit}: ProductReviewModalProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const [validationErrors, setValidationErrors] = useState({
+    rating: false,
+    userName: false,
+    advantage: false,
+    disadvantage: false,
+    review: false,
+  });
+  const [form, setForm] = useState({
+    cameraId: Number(cameraId),
+    rating: 0,
+    userName: '',
+    advantage: '',
+    disadvantage: '',
+    review: ''
+  });
+
+
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const newValidationErrors = {
+      rating: !form.rating,
+      userName: !form.userName,
+      advantage: !form.advantage,
+      disadvantage: !form.disadvantage,
+      review: !form.review,
+    };
+    setValidationErrors(newValidationErrors);
+    const isFormInValid = Object.values(newValidationErrors).some((bool) => bool);
+    if (isFormInValid) {
+      return;
+    }
 
-    // onSubmit();
+    dispatch(postReviewForCamera(form));
+    onSubmit();
+  };
+
+  useEscapeFromModal(onClose);
+  useLockScroll(isActive);
+
+  const handleRatingChange = (event: FormEvent<HTMLFieldSetElement>) => {
+    setForm((state) => ({...state, rating: Number((event.target as HTMLInputElement).value) || 0}));
+  };
+  const handleUserNameChange = (event: FormEvent<HTMLInputElement>) => {
+    setForm((state) => ({...state, userName: (event.target as HTMLInputElement).value || ''}));
+  };
+  const handleAdvantageChange = (event: FormEvent<HTMLInputElement>) => {
+    setForm((state) => ({...state, advantage: (event.target as HTMLInputElement).value || ''}));
+  };
+  const handleDisadvantageChange = (event: FormEvent<HTMLInputElement>) => {
+    setForm((state) => ({...state, disadvantage: (event.target as HTMLInputElement).value || ''}));
+  };
+  const handleReviewChange = (event: FormEvent<HTMLTextAreaElement>) => {
+    setForm((state) => ({...state, review: (event.target as HTMLInputElement).value || ''}));
   };
 
   return (
@@ -28,13 +83,13 @@ function ProductReviewModal({isActive, onClose, onSubmit}: ProductReviewModalPro
 
       <div className={`modal ${isActive ? 'is-active' : ''}`}>
         <div className="modal__wrapper">
-          <div className="modal__overlay"></div>
+          <div className="modal__overlay" onClick={onClose}></div>
           <div className="modal__content">
             <p className="title title--h4">Оставить отзыв</p>
             <div className="form-review">
-              <form method="post" onSubmit={handleOnSubmit}>
+              <form method="post" onSubmit={handleOnSubmit} noValidate>
                 <div className="form-review__rate">
-                  <fieldset className="rate form-review__item">
+                  <fieldset className={`rate form-review__item ${validationErrors.rating ? 'is-invalid' : ''}`} onChange={handleRatingChange}>
                     <legend className="rate__caption">Рейтинг
                       <svg width="9" height="9" aria-hidden="true">
                         <use xlinkHref="#icon-snowflake"></use>
@@ -58,47 +113,47 @@ function ProductReviewModal({isActive, onClose, onSubmit}: ProductReviewModalPro
                     </div>
                     <p className="rate__message">Нужно оценить товар</p>
                   </fieldset>
-                  <div className="custom-input form-review__item">
+                  <div className={`custom-input form-review__item ${validationErrors.userName ? 'is-invalid' : ''}`}>
                     <label>
                       <span className="custom-input__label">Ваше имя
                         <svg width="9" height="9" aria-hidden="true">
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <input type="text" name="user-name" placeholder="Введите ваше имя" required />
+                      <input type="text" name="user-name" placeholder="Введите ваше имя" required onChange={handleUserNameChange} />
                     </label>
                     <p className="custom-input__error">Нужно указать имя</p>
                   </div>
-                  <div className="custom-input form-review__item">
+                  <div className={`custom-input form-review__item ${validationErrors.advantage ? 'is-invalid' : ''}`}>
                     <label>
                       <span className="custom-input__label">Достоинства
                         <svg width="9" height="9" aria-hidden="true">
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <input type="text" name="user-plus" placeholder="Основные преимущества товара" required />
+                      <input type="text" name="user-plus" placeholder="Основные преимущества товара" required onChange={handleAdvantageChange}/>
                     </label>
                     <p className="custom-input__error">Нужно указать достоинства</p>
                   </div>
-                  <div className="custom-input form-review__item">
+                  <div className={`custom-input form-review__item ${validationErrors.disadvantage ? 'is-invalid' : ''}`}>
                     <label>
                       <span className="custom-input__label">Недостатки
                         <svg width="9" height="9" aria-hidden="true">
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <input type="text" name="user-minus" placeholder="Главные недостатки товара" required />
+                      <input type="text" name="user-minus" placeholder="Главные недостатки товара" required onChange={handleDisadvantageChange}/>
                     </label>
                     <p className="custom-input__error">Нужно указать недостатки</p>
                   </div>
-                  <div className="custom-textarea form-review__item">
+                  <div className={`custom-textarea form-review__item ${validationErrors.review ? 'is-invalid' : ''}`}>
                     <label>
                       <span className="custom-textarea__label">Комментарий
                         <svg width="9" height="9" aria-hidden="true">
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <textarea name="user-comment" minLength={5} placeholder="Поделитесь своим опытом покупки"></textarea>
+                      <textarea name="user-comment" minLength={5} placeholder="Поделитесь своим опытом покупки" onChange={handleReviewChange}></textarea>
                     </label>
                     <div className="custom-textarea__error">Нужно добавить комментарий</div>
                   </div>
