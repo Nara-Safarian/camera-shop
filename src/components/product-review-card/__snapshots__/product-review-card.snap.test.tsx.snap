@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductReviewCard snapshot should be rendered correctly 1`] = `
+<div>
+  <li
+    class="review-card"
+  >
+    <div
+      class="review-card__head"
+    >
+      <p
+        class="title title--h4"
+      >
+        Test
+      </p>
+      <time
+        class="review-card__data"
+        datetime="2022-04-13"
+      >
+        Sat, 08 Jul 2023 11:58:27 GMT
+      </time>
+    </div>
+    <div
+      class="rate review-card__rate"
+    >
+      <svg
+        aria-hidden="true"
+        height="16"
+        width="17"
+      >
+        <use
+          xlink:href="#icon-full-star"
+        />
+      </svg>
+      <svg
+        aria-hidden="true"
+        height="16"
+        width="17"
+      >
+        <use
+          xlink:href="#icon-full-star"
+        />
+      </svg>
+      <svg
+        aria-hidden="true"
+        height="16"
+        width="17"
+      >
+        <use
+          xlink:href="#icon-full-star"
+        />
+      </svg>
+      <svg
+        aria-hidden="true"
+        height="16"
+        width="17"
+      >
+        <use
+          xlink:href="#icon-full-star"
+        />
+      </svg>
+      <svg
+        aria-hidden="true"
+        height="16"
+        width="17"
+      >
+        <use
+          xlink:href="#icon-star"
+        />
+      </svg>
+      <p
+        class="visually-hidden"
+      >
+        Оценка: 
+        4
+      </p>
+    </div>
+    <ul
+      class="review-card__list"
+    >
+      <li
+        class="item-list"
+      >
+        <span
+          class="item-list__title"
+        >
+          Достоинства:
+        </span>
+        <p
+          class="item-list__text"
+        >
+          Super
+        </p>
+      </li>
+      <li
+        class="item-list"
+      >
+        <span
+          class="item-list__title"
+        >
+          Недостатки:
+        </span>
+        <p
+          class="item-list__text"
+        >
+          Not super
+        </p>
+      </li>
+      <li
+        class="item-list"
+      >
+        <span
+          class="item-list__title"
+        >
+          Комментарий:
+        </span>
+        <p
+          class="item-list__text"
+        >
+          Cool thing. I suggest
+        </p>
+      </li>
+    </ul>
+  </li>
+</div>
+`;

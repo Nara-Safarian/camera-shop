@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tabs snapshot should be rendered correctly 1`] = `
+<div>
+  <div
+    class="tabs product__tabs"
+  >
+    <div
+      class="tabs__controls product__tabs-controls"
+    >
+      <button
+        class="tabs__control "
+        type="button"
+      >
+        Характеристики
+      </button>
+      <button
+        class="tabs__control is-active"
+        type="button"
+      >
+        Описание
+      </button>
+    </div>
+    <div
+      class="tabs__content"
+    >
+      <div
+        class="tabs__element "
+      >
+        <ul
+          class="product__tabs-list"
+        >
+          <li
+            class="item-list"
+          >
+            <span
+              class="item-list__title"
+            >
+              Артикул:
+            </span>
+            <p
+              class="item-list__text"
+            >
+               
+              DA4IU67AD5
+            </p>
+          </li>
+          <li
+            class="item-list"
+          >
+            <span
+              class="item-list__title"
+            >
+              Категория:
+            </span>
+            <p
+              class="item-list__text"
+            >
+              Видеокамера
+            </p>
+          </li>
+          <li
+            class="item-list"
+          >
+            <span
+              class="item-list__title"
+            >
+              Тип камеры:
+            </span>
+            <p
+              class="item-list__text"
+            >
+              Коллекционная
+            </p>
+          </li>
+          <li
+            class="item-list"
+          >
+            <span
+              class="item-list__title"
+            >
+              Уровень:
+            </span>
+            <p
+              class="item-list__text"
+            >
+              Любительский
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tabs__element is-active"
+      >
+        <div
+          class="product__tabs-text"
+        >
+          <p>
+            Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники. Вы тоже можете прикоснуться к волшебству аналоговой съёмки, заказав этот чудо-аппарат. Кто знает, может с Das Auge IV начнётся ваш путь к наградам всех престижных кинофестивалей.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

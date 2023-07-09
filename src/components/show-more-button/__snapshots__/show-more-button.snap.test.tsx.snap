@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShowMoreButton snapshot should be rendered correctly 1`] = `
+<div>
+  <button
+    class="btn btn--purple"
+    type="button"
+  >
+    Показать больше отзывов
+  </button>
+</div>
+`;

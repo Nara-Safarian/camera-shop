@@ -1,0 +1,248 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductList snapshot should be rendered correctly 1`] = `
+<div>
+  <div
+    class="product-card "
+  >
+    <div
+      class="product-card__img"
+    >
+      <picture>
+        <source
+          srcset="img/content/das-auge.webp, img/content/das-auge@2x.webp 2x"
+          type="image/webp"
+        />
+        <img
+          alt="Ретрокамера Dus Auge lV"
+          height="240"
+          src="img/content/das-auge.jpg"
+          srcset="img/content/das-auge@2x.jpg 2x"
+          width="280"
+        />
+      </picture>
+    </div>
+    <div
+      class="product-card__info"
+    >
+      <div
+        class="rate product-card__rate"
+      >
+        <svg
+          aria-hidden="true"
+          height="16"
+          width="17"
+        >
+          <use
+            xlink:href="#icon-full-star"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          height="16"
+          width="17"
+        >
+          <use
+            xlink:href="#icon-full-star"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          height="16"
+          width="17"
+        >
+          <use
+            xlink:href="#icon-full-star"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          height="16"
+          width="17"
+        >
+          <use
+            xlink:href="#icon-star"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          height="16"
+          width="17"
+        >
+          <use
+            xlink:href="#icon-star"
+          />
+        </svg>
+        <p
+          class="visually-hidden"
+        >
+          Рейтинг: 3
+        </p>
+        <p
+          class="rate__count"
+        >
+          <span
+            class="visually-hidden"
+          >
+            Всего оценок:
+          </span>
+          149
+        </p>
+      </div>
+      <p
+        class="product-card__title"
+      >
+        Ретрокамера Dus Auge lV
+      </p>
+      <p
+        class="product-card__price"
+      >
+        <span
+          class="visually-hidden"
+        >
+          Цена:
+        </span>
+        73450
+         ₽
+      </p>
+    </div>
+    <div
+      class="product-card__buttons"
+    >
+      <button
+        class="btn btn--purple product-card__btn"
+        type="button"
+      >
+        Купить
+      </button>
+      <a
+        class="btn btn--transparent"
+        href="/cameras/1"
+      >
+        Подробнее
+      </a>
+    </div>
+  </div>
+  <div
+    class="product-card "
+  >
+    <div
+      class="product-card__img"
+    >
+      <picture>
+        <source
+          srcset="img/content/das-auge.webp, img/content/das-auge@2x.webp 2x"
+          type="image/webp"
+        />
+        <img
+          alt="Ретрокамера Dus Auge lV"
+          height="240"
+          src="img/content/das-auge.jpg"
+          srcset="img/content/das-auge@2x.jpg 2x"
+          width="280"
+        />
+      </picture>
+    </div>
+    <div
+      class="product-card__info"
+    >
+      <div
+        class="rate product-card__rate"
+      >
+        <svg
+          aria-hidden="true"
+          height="16"
+          width="17"
+        >
+          <use
+            xlink:href="#icon-full-star"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          height="16"
+          width="17"
+        >
+          <use
+            xlink:href="#icon-full-star"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          height="16"
+          width="17"
+        >
+          <use
+            xlink:href="#icon-full-star"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          height="16"
+          width="17"
+        >
+          <use
+            xlink:href="#icon-star"
+          />
+        </svg>
+        <svg
+          aria-hidden="true"
+          height="16"
+          width="17"
+        >
+          <use
+            xlink:href="#icon-star"
+          />
+        </svg>
+        <p
+          class="visually-hidden"
+        >
+          Рейтинг: 3
+        </p>
+        <p
+          class="rate__count"
+        >
+          <span
+            class="visually-hidden"
+          >
+            Всего оценок:
+          </span>
+          149
+        </p>
+      </div>
+      <p
+        class="product-card__title"
+      >
+        Ретрокамера Dus Auge lV
+      </p>
+      <p
+        class="product-card__price"
+      >
+        <span
+          class="visually-hidden"
+        >
+          Цена:
+        </span>
+        73450
+         ₽
+      </p>
+    </div>
+    <div
+      class="product-card__buttons"
+    >
+      <button
+        class="btn btn--purple product-card__btn"
+        type="button"
+      >
+        Купить
+      </button>
+      <a
+        class="btn btn--transparent"
+        href="/cameras/2"
+      >
+        Подробнее
+      </a>
+    </div>
+  </div>
+</div>
+`;
