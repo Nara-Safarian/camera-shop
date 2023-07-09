@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpButton snapshot should be rendered correctly 1`] = `
+<div>
+  <button
+    class="up-btn"
+  >
+    <svg
+      aria-hidden="true"
+      height="18"
+      width="12"
+    >
+      <use
+        xlink:href="#icon-arrow2"
+      />
+    </svg>
+  </button>
+</div>
+`;

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CloseButton snapshot should be rendered correctly 1`] = `
+<div>
+  <button
+    aria-label="Закрыть попап"
+    class="cross-btn"
+    type="button"
+  >
+    <svg
+      aria-hidden="true"
+      height="10"
+      width="10"
+    >
+      <use
+        xlink:href="#icon-close"
+      />
+    </svg>
+  </button>
+</div>
+`;

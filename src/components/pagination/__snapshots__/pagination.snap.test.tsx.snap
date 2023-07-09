@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination snapshot should be rendered correctly 1`] = `
+<div>
+  <div
+    class="pagination"
+  >
+    <ul
+      class="pagination__list"
+    >
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link pagination__link--text"
+          href="catalog/page_1"
+        >
+          Назад
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link "
+          href="catalog/page_1"
+        >
+          1
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link pagination__link--active"
+          href="catalog/page_2"
+        >
+          2
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link "
+          href="catalog/page_3"
+        >
+          3
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link "
+          href="catalog/page_4"
+        >
+          4
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link "
+          href="catalog/page_5"
+        >
+          5
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link "
+          href="catalog/page_6"
+        >
+          6
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link "
+          href="catalog/page_7"
+        >
+          7
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link "
+          href="catalog/page_8"
+        >
+          8
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link "
+          href="catalog/page_9"
+        >
+          9
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link "
+          href="catalog/page_10"
+        >
+          10
+        </a>
+      </li>
+      <li
+        class="pagination__item"
+      >
+        <a
+          class="pagination__link pagination__link--text"
+          href="catalog/page_3"
+        >
+          Далее
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
