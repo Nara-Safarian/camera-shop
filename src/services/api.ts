@@ -1,4 +1,5 @@
 import axios, {AxiosInstance} from 'axios';
+import { toast } from 'react-toastify';
 
 
 const BACKEND_URL = 'https://camera-shop.accelerator.pages.academy/';
@@ -9,6 +10,14 @@ export const createAPI = (): AxiosInstance => {
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
   });
+
+  api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      toast.error(`Произошла ошибка, ${String(error)}`);
+      throw error;
+    }
+  );
 
   return api;
 };
