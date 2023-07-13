@@ -8,18 +8,20 @@ exports[`Tabs snapshot should be rendered correctly 1`] = `
     <div
       class="tabs__controls product__tabs-controls"
     >
-      <button
+      <a
         class="tabs__control "
+        href="/?tab=overview"
         type="button"
       >
         Характеристики
-      </button>
-      <button
+      </a>
+      <a
         class="tabs__control is-active"
+        href="/?tab=description"
         type="button"
       >
         Описание
-      </button>
+      </a>
     </div>
     <div
       class="tabs__content"

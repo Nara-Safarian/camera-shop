@@ -5,7 +5,6 @@ import { AppRoute } from '../../consts';
 import NotFoundPage from '../../pages/not-found/not-found';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
-
 function App(): JSX.Element {
   return (
     <BrowserRouter>

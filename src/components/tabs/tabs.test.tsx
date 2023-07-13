@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import Tabs from './tabs';
 import { Product } from '../../types/product';
+import { BrowserRouter } from 'react-router-dom';
 
 const product = {
   'id': 1,
@@ -20,7 +21,9 @@ const product = {
 
 test('Tabs should be rendered correctly', () => {
   render(
-    <Tabs product={product} />
+    <BrowserRouter>
+      <Tabs product={product} />
+    </BrowserRouter>
   );
   expect(screen.getByText('Артикул:')).toBeInTheDocument();
   expect(screen.getByText('Категория:')).toBeInTheDocument();
