@@ -11,10 +11,12 @@ import ProductReviewsAll from '../../components/product-reviews-all/product-revi
 import UpButton from '../../components/up-button/up-button';
 import SimilarProducts from '../../components/similar-products/similar-products';
 import ProductReviewSuccess from '../../components/product-review-success/product-review-success';
+import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
 
 function Product(): JSX.Element | null {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showCatalogAddItemSuccess, setShowCatalogAddItemSuccess] = useState(false);
   const productCard = useAppSelector(getCurrentProduct);
   const similarProducts = useAppSelector(getSimilarProducts);
   const {id} = useParams();
@@ -47,6 +49,13 @@ function Product(): JSX.Element | null {
     setShowSuccessModal(true);
   };
 
+  const handleAddToBasket = () => {
+    setShowCatalogAddItemSuccess(true);
+  };
+
+  const handleOnCloseCatalogAddItemSuccess = () => {
+    setShowCatalogAddItemSuccess(false);
+  };
 
   return (
     <>
@@ -187,7 +196,7 @@ function Product(): JSX.Element | null {
                         <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{productCard.reviewCount}</p>
                       </div>
                       <p className="product__price"><span className="visually-hidden">Цена:</span>{productCard.price}</p>
-                      <button className="btn btn--purple" type="button">
+                      <button className="btn btn--purple" type="button" onClick={handleAddToBasket}>
                         <svg width="24" height="16" aria-hidden="true">
                           <use xlinkHref="#icon-add-basket"></use>
                         </svg>Добавить в корзину
@@ -222,6 +231,7 @@ function Product(): JSX.Element | null {
           !!id && <ProductReviewModal isActive={showReviewModal} onClose={handleOnClose} onSubmit={handleOnSubmit} cameraId={id}/>
         }
         <ProductReviewSuccess onClose={handleOnCloseSuccessModal} isActive={showSuccessModal} />
+        <CatalogAddItemSuccess onClose={handleOnCloseCatalogAddItemSuccess} isActive={showCatalogAddItemSuccess} />
         <Footer />
       </div>
 

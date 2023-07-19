@@ -1,4 +1,65 @@
-function CatalogAddItemSuccess(): JSX.Element {
+import { useRef, useEffect } from 'react';
+import useEscapeFromModal from '../../hooks/use-escape-from-modal';
+import useLockScroll from '../../hooks/use-lock-scroll';
+
+type CatalogAddItemSuccessProps = {
+  isActive: boolean;
+  onClose: () => void;
+}
+
+function CatalogAddItemSuccess({isActive, onClose}: CatalogAddItemSuccessProps): JSX.Element {
+  useEscapeFromModal(onClose);
+  useLockScroll(isActive);
+
+  const modalContainerRef = useRef<HTMLDivElement>(null);
+  const firstElementRef = useRef<HTMLAnchorElement>(null);
+  const lastElementRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isActive) {
+      return;
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          // If Shift + Tab is pressed, focus the last element
+          if (document.activeElement === firstElementRef.current) {
+            e.preventDefault();
+            if (lastElementRef.current) {
+              lastElementRef.current.focus();
+            }
+          }
+        } else {
+          // If Tab is pressed, focus the first element
+          if (document.activeElement === lastElementRef.current) {
+            e.preventDefault();
+            if (firstElementRef.current) {
+              firstElementRef.current.focus();
+            }
+          }
+        }
+      }
+    };
+
+    setTimeout(() => {
+      if (firstElementRef.current) {
+        firstElementRef.current.focus();
+      }
+    }, 10);
+
+    const modalContainer = modalContainerRef.current;
+    if (modalContainer) {
+      modalContainer.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      if (modalContainer) {
+        modalContainer.removeEventListener('keydown', handleKeyDown);
+      }
+    };
+  }, [isActive]);
+
   return (
     <>
       <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -10,8 +71,7 @@ function CatalogAddItemSuccess(): JSX.Element {
         </symbol>
       </svg>
 
-
-      <div className="modal is-active modal--narrow">
+      <div ref={modalContainerRef} className={`modal ${isActive ? 'is-active' : ''} modal--narrow`}>
         <div className="modal__wrapper">
           <div className="modal__overlay"></div>
           <div className="modal__content">
@@ -19,10 +79,10 @@ function CatalogAddItemSuccess(): JSX.Element {
             <svg className="modal__icon" width="86" height="80" aria-hidden="true">
               <use xlinkHref="#icon-success"></use>
             </svg>
-            <div className="modal__buttons"><a className="btn btn--transparent modal__btn" href="#">Продолжить покупки</a>
+            <div className="modal__buttons"><a ref={firstElementRef} className="btn btn--transparent modal__btn" href="#">Продолжить покупки</a>
               <button className="btn btn--purple modal__btn modal__btn--fit-width">Перейти в корзину</button>
             </div>
-            <button className="cross-btn" type="button" aria-label="Закрыть попап">
+            <button ref={lastElementRef} className="cross-btn" type="button" aria-label="Закрыть попап" onClick={onClose}>
               <svg width="10" height="10" aria-hidden="true">
                 <use xlinkHref="#icon-close"></use>
               </svg>

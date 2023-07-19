@@ -11,6 +11,7 @@ import { fetchAllProductsAction, fetchBannerAction } from '../../store/api-actio
 import Pagination from '../../components/pagination/pagination';
 import { Product } from '../../types/product';
 import { useSearchParams, useLocation } from 'react-router-dom';
+import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
 
 const CARDS_PER_PAGE = 9;
 const getTotalPageCount = (cardCount: number) =>
@@ -28,6 +29,7 @@ function MainCatalog(): JSX.Element {
   const allProducts = useAppSelector(getAllProducts);
   const currentBanner = useAppSelector(getBanner);
   const dispatch = useAppDispatch();
+  const [showCatalogAddItemSuccess, setShowCatalogAddItemSuccess] = useState(false);
 
   useEffect(() => {
     dispatch(fetchBannerAction());
@@ -47,6 +49,14 @@ function MainCatalog(): JSX.Element {
   }, [searchParams, search]);
 
   const visibleProducts = useMemo(() => getElementsForPage(allProducts, currentPage), [currentPage, allProducts]);
+
+  const handleAddToBasket = () => {
+    setShowCatalogAddItemSuccess(true);
+  };
+
+  const handleOnCloseCatalogAddItemSuccess = () => {
+    setShowCatalogAddItemSuccess(false);
+  };
 
   return (
     <>
@@ -200,7 +210,7 @@ function MainCatalog(): JSX.Element {
                     <div className="cards catalog__cards">
                       {
                         visibleProducts && (
-                          <ProductList cameras={visibleProducts}/>
+                          <ProductList cameras={visibleProducts} onProductBuyClick={handleAddToBasket} />
                         )
                       }
                     </div>
@@ -211,6 +221,7 @@ function MainCatalog(): JSX.Element {
             </section>
           </div>
         </main>
+        <CatalogAddItemSuccess onClose={handleOnCloseCatalogAddItemSuccess} isActive={showCatalogAddItemSuccess} />
         <Footer />
       </div>
     </>

@@ -21,7 +21,10 @@ const product = {
 test('ProductCard should be rendered correctly', () => {
   render(
     <BrowserRouter>
-      <ProductCard product={product} />
+      <ProductCard product={product} onProductBuyClick={function (): void {
+        // nothing
+      } }
+      />
     </BrowserRouter>
   );
   expect(screen.getByText('Всего оценок:')).toBeInTheDocument();

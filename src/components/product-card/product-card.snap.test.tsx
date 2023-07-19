@@ -21,7 +21,10 @@ const product = {
 test('ProductCard snapshot should be rendered correctly', () => {
   const {container} = render(
     <BrowserRouter>
-      <ProductCard product={product} />
+      <ProductCard product={product} onProductBuyClick={function (): void {
+        // nothing
+      } }
+      />
     </BrowserRouter>
   );
   expect(container).toMatchSnapshot();
