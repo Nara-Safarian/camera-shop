@@ -47,6 +47,15 @@ function ProductReviewModal({isActive, onClose, cameraId, onSubmit}: ProductRevi
 
     dispatch(postReviewForCamera(form));
     onSubmit();
+    event.currentTarget.reset();
+    setForm({
+      cameraId: Number(cameraId),
+      rating: 0,
+      userName: '',
+      advantage: '',
+      disadvantage: '',
+      review: ''
+    });
   };
 
   useEscapeFromModal(onClose);
