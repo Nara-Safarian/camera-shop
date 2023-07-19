@@ -10,6 +10,7 @@ import { getAllProducts } from '../../store/products/selectors';
 import { fetchAllProductsAction, fetchBannerAction } from '../../store/api-actions';
 import Pagination from '../../components/pagination/pagination';
 import { Product } from '../../types/product';
+import { useSearchParams, useLocation } from 'react-router-dom';
 
 const CARDS_PER_PAGE = 9;
 const getTotalPageCount = (cardCount: number) =>
@@ -34,10 +35,17 @@ function MainCatalog(): JSX.Element {
   }, [dispatch]);
 
   const totalPageCount = useMemo(() => getTotalPageCount(allProducts.length), [allProducts.length]);
+
+
+  const [searchParams] = useSearchParams();
+  const {search} = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
-  const handleOnClickNextPage = () => setCurrentPage((state) => state + 1);
-  const handleOnClickPrevPage = () => setCurrentPage((state) => state - 1);
-  const handleOnClickPage = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  useEffect(() => {
+    const page = Number(searchParams.get('page')) || 1;
+    setCurrentPage(page);
+  }, [searchParams, search]);
+
   const visibleProducts = useMemo(() => getElementsForPage(allProducts, currentPage), [currentPage, allProducts]);
 
   return (
@@ -196,7 +204,7 @@ function MainCatalog(): JSX.Element {
                         )
                       }
                     </div>
-                    <Pagination activePage={currentPage} pagesCount={totalPageCount} onClickNextPage={handleOnClickNextPage} onClickPrevPage={handleOnClickPrevPage} onClickPage={handleOnClickPage}/>
+                    <Pagination activePage={currentPage} pagesCount={totalPageCount}/>
                   </div>
                 </div>
               </div>

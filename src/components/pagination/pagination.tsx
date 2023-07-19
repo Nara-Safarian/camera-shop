@@ -1,12 +1,18 @@
+import { useLocation, Link } from 'react-router-dom';
+
 type PaginationProps = {
   activePage: number;
   pagesCount: number;
-  onClickNextPage: () => void;
-  onClickPrevPage: () => void;
-  onClickPage: (pageNumber: number) => void;
 }
 
-function Pagination({activePage, pagesCount, onClickNextPage, onClickPrevPage, onClickPage}: PaginationProps): JSX.Element | null {
+const getPageLink = (pathname: string, page: number) => {
+  const newSearchParams = new URLSearchParams();
+  newSearchParams.set('page', String(page));
+  return `${pathname}?${newSearchParams.toString()}`;
+};
+
+function Pagination({activePage, pagesCount}: PaginationProps): JSX.Element | null {
+  const {pathname} = useLocation();
   if (pagesCount <= 1) {
     return null;
   }
@@ -14,20 +20,12 @@ function Pagination({activePage, pagesCount, onClickNextPage, onClickPrevPage, o
   const pages = [...Array(pagesCount).keys()];
   const isNotFirstPage = activePage !== 1;
   const isNotLastPage = activePage !== pagesCount;
-  const handleOnClickNextPage = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    onClickNextPage();
-  };
-  const handleOnClickPrevPage = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    onClickPrevPage();
-  };
 
   return (
     <div className="pagination">
       <ul className="pagination__list">
         {isNotFirstPage && (
-          <li className="pagination__item"><a className="pagination__link pagination__link--text" href={`catalog/page_${activePage - 1}`} onClick={handleOnClickPrevPage}>Назад</a>
+          <li className="pagination__item"><Link className="pagination__link pagination__link--text" to={getPageLink(pathname, activePage - 1)}>Назад</Link>
           </li>
         )}
         {
@@ -36,19 +34,15 @@ function Pagination({activePage, pagesCount, onClickNextPage, onClickPrevPage, o
             const isActive = activePage === currentPage;
             return (
               <li key={key} className="pagination__item">
-                <a className={`pagination__link ${isActive ? 'pagination__link--active' : ''}`} href={`catalog/page_${currentPage}`} onClick={(event) => {
-                  event.preventDefault();
-                  onClickPage(currentPage);
-                }}
-                >
+                <Link className={`pagination__link ${isActive ? 'pagination__link--active' : ''}`} to={getPageLink(pathname, currentPage)}>
                   {currentPage}
-                </a>
+                </Link>
               </li>
             );
           })
         }
         {isNotLastPage && (
-          <li className="pagination__item"><a className="pagination__link pagination__link--text" href={`catalog/page_${activePage + 1}`} onClick={handleOnClickNextPage}>Далее</a>
+          <li className="pagination__item"><Link className="pagination__link pagination__link--text" to={getPageLink(pathname, activePage + 1)}>Далее</Link>
           </li>
         )}
       </ul>

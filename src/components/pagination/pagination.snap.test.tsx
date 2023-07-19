@@ -1,16 +1,12 @@
 import { render } from '@testing-library/react';
 import Pagination from './pagination';
+import { BrowserRouter } from 'react-router-dom';
 
 test('Pagination snapshot should be rendered correctly', () => {
   const {container} = render(
-    <Pagination activePage={2} pagesCount={10} onClickNextPage={function (): void {
-      // nothing
-    } } onClickPrevPage={function (): void {
-      // nothing
-    } } onClickPage={function (): void {
-      // nothing
-    } }
-    />
+    <BrowserRouter>
+      <Pagination activePage={2} pagesCount={10} />
+    </BrowserRouter>
   );
   expect(container).toMatchSnapshot();
 });
