@@ -4,10 +4,17 @@ import { CameraCard } from '../../types/camera-card';
 type ProductCardProps = {
   product: CameraCard;
   isActive?: boolean;
+  onProductBuyClick?: () => void;
 }
 
-function ProductCard({product, isActive}: ProductCardProps): JSX.Element {
+function ProductCard({product, isActive, onProductBuyClick}: ProductCardProps): JSX.Element {
   const {id, previewImgWebp, previewImgWebp2x, previewImg2x, previewImg, name, reviewCount, price} = product;
+
+  const handleOnProductBuyClick = () => {
+    if (onProductBuyClick) {
+      onProductBuyClick();
+    }
+  };
 
   return (
     <div className={`product-card ${isActive ? 'is-active' : ''}`}>
@@ -42,7 +49,7 @@ function ProductCard({product, isActive}: ProductCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
+        <button className="btn btn--purple product-card__btn" type="button" onClick={handleOnProductBuyClick}>Купить
         </button>
         <Link to={`/cameras/${id}`} className="btn btn--transparent">Подробнее
         </Link>

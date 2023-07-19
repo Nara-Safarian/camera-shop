@@ -39,7 +39,10 @@ const cameras = [
 test('ProductList snapshot should be rendered correctly', () => {
   const {container} = render(
     <BrowserRouter>
-      <ProductList cameras={cameras} />
+      <ProductList cameras={cameras} onProductBuyClick={function (): void {
+        // nothing
+      } }
+      />
     </BrowserRouter>
   );
   expect(container).toMatchSnapshot();

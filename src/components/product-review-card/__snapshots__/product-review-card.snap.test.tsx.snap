@@ -15,9 +15,9 @@ exports[`ProductReviewCard snapshot should be rendered correctly 1`] = `
       </p>
       <time
         class="review-card__data"
-        datetime="2022-04-13"
+        datetime="2023-07-08"
       >
-        Sat, 08 Jul 2023 11:58:27 GMT
+        8 июля
       </time>
     </div>
     <div

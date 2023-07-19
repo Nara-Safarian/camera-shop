@@ -38,7 +38,10 @@ const cameras = [
 test('ProductList should be rendered correctly', () => {
   render(
     <BrowserRouter>
-      <ProductList cameras={cameras} />
+      <ProductList cameras={cameras} onProductBuyClick={function (): void {
+        // nothing
+      } }
+      />
     </BrowserRouter>
   );
   expect(screen.getAllByRole('img').length).toBe(2);

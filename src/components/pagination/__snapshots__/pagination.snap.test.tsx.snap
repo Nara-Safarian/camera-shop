@@ -13,7 +13,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link pagination__link--text"
-          href="catalog/page_1"
+          href="/?page=1"
         >
           Назад
         </a>
@@ -23,7 +23,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link "
-          href="catalog/page_1"
+          href="/?page=1"
         >
           1
         </a>
@@ -33,7 +33,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link pagination__link--active"
-          href="catalog/page_2"
+          href="/?page=2"
         >
           2
         </a>
@@ -43,7 +43,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link "
-          href="catalog/page_3"
+          href="/?page=3"
         >
           3
         </a>
@@ -53,7 +53,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link "
-          href="catalog/page_4"
+          href="/?page=4"
         >
           4
         </a>
@@ -63,7 +63,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link "
-          href="catalog/page_5"
+          href="/?page=5"
         >
           5
         </a>
@@ -73,7 +73,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link "
-          href="catalog/page_6"
+          href="/?page=6"
         >
           6
         </a>
@@ -83,7 +83,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link "
-          href="catalog/page_7"
+          href="/?page=7"
         >
           7
         </a>
@@ -93,7 +93,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link "
-          href="catalog/page_8"
+          href="/?page=8"
         >
           8
         </a>
@@ -103,7 +103,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link "
-          href="catalog/page_9"
+          href="/?page=9"
         >
           9
         </a>
@@ -113,7 +113,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link "
-          href="catalog/page_10"
+          href="/?page=10"
         >
           10
         </a>
@@ -123,7 +123,7 @@ exports[`Pagination snapshot should be rendered correctly 1`] = `
       >
         <a
           class="pagination__link pagination__link--text"
-          href="catalog/page_3"
+          href="/?page=3"
         >
           Далее
         </a>

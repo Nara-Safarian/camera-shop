@@ -38,7 +38,7 @@ function SimilarProducts({products}: SimilarProductsProps): JSX.Element {
               <use xlinkHref="#icon-arrow"></use>
             </svg>
           </button>
-          <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" onClick={handleClickRight} style={{pointerEvents: isRightButtonDisable ? 'none' : 'all'}}>
+          <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" onClick={handleClickRight} style={{pointerEvents: isRightButtonDisable ? 'none' : 'all'}} disabled={isRightButtonDisable}>
             <svg width="7" height="12" aria-hidden="true">
               <use xlinkHref="#icon-arrow"></use>
             </svg>
