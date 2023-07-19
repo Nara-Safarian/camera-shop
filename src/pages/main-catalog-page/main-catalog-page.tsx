@@ -45,8 +45,8 @@ function MainCatalog(): JSX.Element {
 
   useEffect(() => {
     const page = Number(searchParams.get('page')) || 1;
-    setCurrentPage(page);
-  }, [searchParams, search]);
+    setCurrentPage(page > totalPageCount ? totalPageCount : page);
+  }, [searchParams, search, totalPageCount]);
 
   const visibleProducts = useMemo(() => getElementsForPage(allProducts, currentPage), [currentPage, allProducts]);
 
