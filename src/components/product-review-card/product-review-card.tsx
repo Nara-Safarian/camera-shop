@@ -1,4 +1,7 @@
 import { Review } from '../../types/reviews';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
+
 
 type ReviewsProps = {
   review: Review;
@@ -8,11 +11,13 @@ const MAX_RATING = 5;
 
 function ProductReviewCard({review}: ReviewsProps): JSX.Element {
 
+  const createdAtString = format(new Date(review.createAt), 'd MMMM', { locale: ru });
+
   return (
     <li className="review-card">
       <div className="review-card__head">
         <p className="title title--h4">{review.userName}</p>
-        <time className="review-card__data" dateTime="2022-04-13">{review.createAt}</time>
+        <time className="review-card__data" dateTime={format(new Date(review.createAt), 'yyyy-MM-dd')}>{createdAtString}</time>
       </div>
       <div className="rate review-card__rate">
         {
