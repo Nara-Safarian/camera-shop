@@ -1,0 +1,22 @@
+.product-similar__slider {
+  overflow-x: hidden;
+}
+
+.product-similar__slider-list {
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.product-similar__slider-list::-webkit-scrollbar {
+  display: none;
+}
+
+.product-similar .product-card.product-card {
+  display: inline-block;
+  flex-shrink: 0;
+  width: calc(33.3% - 32px);
+}
+
+.product-similar .product-card.product-card:last-child {
+  margin-right: 16px;
+}

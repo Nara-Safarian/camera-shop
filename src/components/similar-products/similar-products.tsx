@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Product } from '../../types/product';
 import ProductCard from '../product-card/product-card';
 
@@ -16,13 +16,40 @@ function SimilarProducts({products}: SimilarProductsProps): JSX.Element {
   const handleClickLeft = () => setPage(page - 1);
   const isLeftButtonDisable = page === 0 ? true : undefined;
   const isRightButtonDisable = page === lastPage ? true : undefined;
+  const sliderContentRef = useRef<HTMLDivElement>(null);
+
+  const changeScrollPositon = (newPage: number) => {
+    const container = sliderContentRef.current;
+    if (!container) {
+      return;
+    }
+    const left = newPage * container.clientWidth;
+    if (container.scrollTo) {
+      container.scrollTo({
+        left,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  useEffect(() => {
+    changeScrollPositon(page);
+
+    const handleResize = () => {
+      changeScrollPositon(page);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [page]);
 
   return (
     <section className="product-similar">
       <div className="container">
         <h2 className="title title--h3">Похожие товары</h2>
         <div className="product-similar__slider">
-          <div className="product-similar__slider-list">
+          <div className="product-similar__slider-list" ref={sliderContentRef}>
             {
               products.map((product, index) => {
                 const startIndex = page * CARD_LIMIT;
