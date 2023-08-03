@@ -34,7 +34,7 @@ exports[`ProductCard snapshot should be rendered correctly 1`] = `
           width="17"
         >
           <use
-            xlink:href="#icon-full-star"
+            xlink:href="#icon-star"
           />
         </svg>
         <svg
@@ -43,7 +43,7 @@ exports[`ProductCard snapshot should be rendered correctly 1`] = `
           width="17"
         >
           <use
-            xlink:href="#icon-full-star"
+            xlink:href="#icon-star"
           />
         </svg>
         <svg
@@ -52,7 +52,7 @@ exports[`ProductCard snapshot should be rendered correctly 1`] = `
           width="17"
         >
           <use
-            xlink:href="#icon-full-star"
+            xlink:href="#icon-star"
           />
         </svg>
         <svg
@@ -76,7 +76,8 @@ exports[`ProductCard snapshot should be rendered correctly 1`] = `
         <p
           class="visually-hidden"
         >
-          Рейтинг: 3
+          Рейтинг: 
+          0
         </p>
         <p
           class="rate__count"

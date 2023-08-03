@@ -27,7 +27,9 @@ export const fetchAllProductsAction = createAsyncThunk<void, undefined, {
 }>(
   `${NameSpace.Products}/fetchAllProducts`,
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<Product[]>(APIRoute.Products);
+    const {data} = await api.get<Product[]>(APIRoute.Products, {params: {
+      _embed: 'reviews'
+    }});
 
     dispatch(setProductCards(data));
   },
@@ -40,7 +42,9 @@ export const fetchCurrentProductAction = createAsyncThunk<void, {id: string}, {
 }>(
   `${NameSpace.Products}/fetchCurrentProduct`,
   async ({id}, {dispatch, extra: api}) => {
-    const {data} = await api.get<Product>(`${APIRoute.Products}/${id}`);
+    const {data} = await api.get<Product>(`${APIRoute.Products}/${id}`, {params: {
+      _embed: 'reviews'
+    }});
     dispatch(setCurrentProduct(data));
   },
 );
