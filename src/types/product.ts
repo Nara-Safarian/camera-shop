@@ -1,4 +1,5 @@
 import { ProductCategory, ProductLevel, ProductType } from '../enums';
+import { Review } from './reviews';
 
 export type Product = {
   'id': number;
@@ -14,4 +15,5 @@ export type Product = {
   'previewImg2x': string;
   'previewImgWebp': string;
   'previewImgWebp2x': string;
+  'reviews'?: Review[];
 };

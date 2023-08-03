@@ -12,6 +12,7 @@ import UpButton from '../../components/up-button/up-button';
 import SimilarProducts from '../../components/similar-products/similar-products';
 import ProductReviewSuccess from '../../components/product-review-success/product-review-success';
 import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
+import ProductCardRating from '../../components/product-card-rating/product-card-rating';
 
 function Product(): JSX.Element | null {
   const [showReviewModal, setShowReviewModal] = useState(false);
@@ -176,25 +177,7 @@ function Product(): JSX.Element | null {
                     </div>
                     <div className="product__content">
                       <h1 className="title title--h3">{productCard.name}</h1>
-                      <div className="rate product__rate">
-                        <svg width="17" height="16" aria-hidden="true">
-                          <use xlinkHref="#icon-full-star"></use>
-                        </svg>
-                        <svg width="17" height="16" aria-hidden="true">
-                          <use xlinkHref="#icon-full-star"></use>
-                        </svg>
-                        <svg width="17" height="16" aria-hidden="true">
-                          <use xlinkHref="#icon-full-star"></use>
-                        </svg>
-                        <svg width="17" height="16" aria-hidden="true">
-                          <use xlinkHref="#icon-full-star"></use>
-                        </svg>
-                        <svg width="17" height="16" aria-hidden="true">
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                        <p className="visually-hidden">Рейтинг: 4</p>
-                        <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{productCard.reviewCount}</p>
-                      </div>
+                      <ProductCardRating reviewCount={productCard.reviewCount} reviews={productCard.reviews} />
                       <p className="product__price"><span className="visually-hidden">Цена:</span>{productCard.price}</p>
                       <button className="btn btn--purple" type="button" onClick={handleAddToBasket}>
                         <svg width="24" height="16" aria-hidden="true">

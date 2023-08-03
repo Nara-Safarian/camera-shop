@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductCardRating snapshot should be rendered correctly with reviews 1`] = `
+<div>
+  <div
+    class="rate product-card__rate"
+  >
+    <svg
+      aria-hidden="true"
+      height="16"
+      width="17"
+    >
+      <use
+        xlink:href="#icon-full-star"
+      />
+    </svg>
+    <svg
+      aria-hidden="true"
+      height="16"
+      width="17"
+    >
+      <use
+        xlink:href="#icon-full-star"
+      />
+    </svg>
+    <svg
+      aria-hidden="true"
+      height="16"
+      width="17"
+    >
+      <use
+        xlink:href="#icon-full-star"
+      />
+    </svg>
+    <svg
+      aria-hidden="true"
+      height="16"
+      width="17"
+    >
+      <use
+        xlink:href="#icon-star"
+      />
+    </svg>
+    <svg
+      aria-hidden="true"
+      height="16"
+      width="17"
+    >
+      <use
+        xlink:href="#icon-star"
+      />
+    </svg>
+    <p
+      class="visually-hidden"
+    >
+      Рейтинг: 
+      3
+    </p>
+    <p
+      class="rate__count"
+    >
+      <span
+        class="visually-hidden"
+      >
+        Всего оценок:
+      </span>
+      10
+    </p>
+  </div>
+</div>
+`;
+
+exports[`ProductCardRating snapshot should be rendered correctly without reviews 1`] = `
+<div>
+  <div
+    class="rate product-card__rate"
+  >
+    <svg
+      aria-hidden="true"
+      height="16"
+      width="17"
+    >
+      <use
+        xlink:href="#icon-star"
+      />
+    </svg>
+    <svg
+      aria-hidden="true"
+      height="16"
+      width="17"
+    >
+      <use
+        xlink:href="#icon-star"
+      />
+    </svg>
+    <svg
+      aria-hidden="true"
+      height="16"
+      width="17"
+    >
+      <use
+        xlink:href="#icon-star"
+      />
+    </svg>
+    <svg
+      aria-hidden="true"
+      height="16"
+      width="17"
+    >
+      <use
+        xlink:href="#icon-star"
+      />
+    </svg>
+    <svg
+      aria-hidden="true"
+      height="16"
+      width="17"
+    >
+      <use
+        xlink:href="#icon-star"
+      />
+    </svg>
+    <p
+      class="visually-hidden"
+    >
+      Рейтинг: 
+      0
+    </p>
+    <p
+      class="rate__count"
+    >
+      <span
+        class="visually-hidden"
+      >
+        Всего оценок:
+      </span>
+      10
+    </p>
+  </div>
+</div>
+`;
