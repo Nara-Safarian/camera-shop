@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
 import { setCurrentProduct, setSimilarProducts } from '../actions';
 
-const initialState: ProductCard = {
+export const initialState: ProductCard = {
   currentProduct: null,
   similarProducts: [],
 };

@@ -1,6 +1,6 @@
 import { Product } from '../../types/product';
-import { setProductCards } from '../actions';
-import { products } from './products';
+import { filterAndSortCards, searchCards, setProductCards } from '../actions';
+import { DEFAULT_FILTER, DEFAULT_SORTING, products } from './products';
 
 const allProducts = [
   {
@@ -51,10 +51,47 @@ const allProducts = [
 ] as Product[];
 
 test('Reducer products: without additional parameters should return initial state', () => {
-  expect(products.reducer(void 0, {type: 'UNKNOWN_ACTION'})).toEqual({allProducts: []});
+  expect(products.reducer(void 0, {type: 'UNKNOWN_ACTION'})).toEqual({
+    isAllProductsLoading: false,
+    allProducts: [],
+    searchProducts: [],
+    originalProducts: [],
+    filter: {...DEFAULT_FILTER},
+    sorting: {...DEFAULT_SORTING}
+  });
 });
 
 
 test('Reducer products: should setProductCards', () => {
-  expect(products.reducer(void 0, setProductCards(allProducts))).toEqual({allProducts});
+  expect(products.reducer(void 0, setProductCards(allProducts))).toEqual({
+    isAllProductsLoading: false,
+    allProducts,
+    searchProducts: [],
+    originalProducts: allProducts,
+    filter: {...DEFAULT_FILTER, minPrice: 79000, maxPrice: 149990},
+    sorting: {...DEFAULT_SORTING}
+  });
 });
+
+test('Reducer products: should searchCards', () => {
+  expect(products.reducer(void 0, searchCards('test'))).toEqual({
+    isAllProductsLoading: false,
+    allProducts: [],
+    searchProducts: [],
+    originalProducts: [],
+    filter: {...DEFAULT_FILTER},
+    sorting: {...DEFAULT_SORTING}
+  });
+});
+
+test('Reducer products: should filterAndSortCards', () => {
+  expect(products.reducer(void 0, filterAndSortCards({}))).toEqual({
+    isAllProductsLoading: false,
+    allProducts: [],
+    searchProducts: [],
+    originalProducts: [],
+    filter: {...DEFAULT_FILTER},
+    sorting: {...DEFAULT_SORTING}
+  });
+});
+

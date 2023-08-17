@@ -1,3 +1,4 @@
+import { ProductCategory, ProductLevel, ProductType } from '../enums';
 import { store } from '../store';
 import { Banner } from './banner';
 import { Product } from './product';
@@ -8,8 +9,38 @@ export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
+export enum SortBy {
+  None = 'none',
+  Rating = 'rating',
+  Price = 'price'
+}
+
+export enum SortOrder {
+  None = 'none',
+  Asc = 'asc',
+  Desc = 'desc'
+}
+
+export type Sorting = {
+  by: SortBy;
+  order: SortOrder;
+};
+
+export type Filter = {
+  category?: ProductCategory;
+  level?: Array<ProductLevel>;
+  type?: Array<ProductType>;
+  minPrice: number;
+  maxPrice: number;
+};
+
 export type Products = {
+  isAllProductsLoading: boolean;
   allProducts: Product[];
+  searchProducts: Product[];
+  originalProducts: Product[];
+  sorting: Sorting;
+  filter: Filter;
 }
 
 export type Banners = {

@@ -353,7 +353,7 @@ exports[`App snapshot should be rendered correctly 1`] = `
             </ul>
           </nav>
           <div
-            class="form-search"
+            class="form-search  reset-invisible"
           >
             <form>
               <label>
@@ -372,42 +372,12 @@ exports[`App snapshot should be rendered correctly 1`] = `
                   class="form-search__input"
                   placeholder="Поиск по сайту"
                   type="text"
+                  value=""
                 />
               </label>
               <ul
                 class="form-search__select-list"
-              >
-                <li
-                  class="form-search__select-item"
-                  tabindex="0"
-                >
-                  Cannonball Pro MX 8i
-                </li>
-                <li
-                  class="form-search__select-item"
-                  tabindex="0"
-                >
-                  Cannonball Pro MX 7i
-                </li>
-                <li
-                  class="form-search__select-item"
-                  tabindex="0"
-                >
-                  Cannonball Pro MX 6i
-                </li>
-                <li
-                  class="form-search__select-item"
-                  tabindex="0"
-                >
-                  Cannonball Pro MX 5i
-                </li>
-                <li
-                  class="form-search__select-item"
-                  tabindex="0"
-                >
-                  Cannonball Pro MX 4i
-                </li>
-              </ul>
+              />
             </form>
             <button
               class="form-search__reset"
@@ -537,6 +507,7 @@ exports[`App snapshot should be rendered correctly 1`] = `
                               name="price"
                               placeholder="от"
                               type="number"
+                              value="0"
                             />
                           </label>
                         </div>
@@ -548,6 +519,7 @@ exports[`App snapshot should be rendered correctly 1`] = `
                               name="priceUp"
                               placeholder="до"
                               type="number"
+                              value="0"
                             />
                           </label>
                         </div>
@@ -854,8 +826,10 @@ exports[`App snapshot should be rendered correctly 1`] = `
                   </form>
                 </div>
                 <div
-                  class="cards catalog__cards"
-                />
+                  class="found-nothing"
+                >
+                  по вашему запросу ничего не найдено
+                </div>
               </div>
             </div>
           </div>

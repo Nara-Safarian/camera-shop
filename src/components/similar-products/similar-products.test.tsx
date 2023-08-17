@@ -2,6 +2,15 @@ import { render, screen } from '@testing-library/react';
 import SimilarProducts from './similar-products';
 import { Product } from '../../types/product';
 import { BrowserRouter } from 'react-router-dom';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { Provider } from 'react-redux';
+import { NameSpace } from '../../consts';
+const mockStore = configureMockStore();
+const store = mockStore({
+  [NameSpace.Products]: {allProducts: [], searchProducts: []},
+  [NameSpace.Banner]: {banner: null},
+});
+store.dispatch = jest.fn();
 
 const products = [
   {
@@ -83,9 +92,11 @@ const products = [
 
 test('SimilarProducts should be rendered correctly', () => {
   render(
-    <BrowserRouter>
-      <SimilarProducts products={products} />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <SimilarProducts products={products} />
+      </BrowserRouter>
+    </Provider>
   );
   expect(screen.getAllByRole('img').length).toBe(5);
 });

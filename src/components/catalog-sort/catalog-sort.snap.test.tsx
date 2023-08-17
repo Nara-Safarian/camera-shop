@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import App from './app';
+import CatalogSort from './catalog-sort';
 
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
@@ -18,10 +18,10 @@ const store = mockStore({
 store.dispatch = jest.fn();
 window.scrollTo = jest.fn();
 
-test('App snapshot should be rendered correctly', () => {
+test('CatalogSort snapshot should be rendered correctly', () => {
   const {container} = render(
     <Provider store={store}>
-      <App />
+      <CatalogSort />
     </Provider>
   );
   expect(container).toMatchSnapshot();

@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
 import { setBanner } from '../actions';
 
-const initialState: Banners = {
+export const initialState: Banners = {
   banner: null,
 };
 
