@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader snapshot should be rendered correctly 1`] = `
+<div>
+  <div
+    class="three-body-wrapper"
+  >
+    <div
+      class="three-body"
+    >
+      <div
+        class="three-body__dot"
+      />
+      <div
+        class="three-body__dot"
+      />
+      <div
+        class="three-body__dot"
+      />
+    </div>
+  </div>
+</div>
+`;

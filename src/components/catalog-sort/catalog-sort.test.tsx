@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react';
-import App from './app';
+import { render, screen } from '@testing-library/react';
+import CatalogSort from './catalog-sort';
 
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
@@ -18,11 +18,13 @@ const store = mockStore({
 store.dispatch = jest.fn();
 window.scrollTo = jest.fn();
 
-test('App snapshot should be rendered correctly', () => {
-  const {container} = render(
+test('CatalogSort should be rendered correctly', () => {
+  render(
     <Provider store={store}>
-      <App />
+      <CatalogSort />
     </Provider>
   );
-  expect(container).toMatchSnapshot();
+  expect(screen.getByText('Сортировать:')).toBeInTheDocument();
+  expect(screen.getByText('по цене')).toBeInTheDocument();
+  expect(screen.getByText('по популярности')).toBeInTheDocument();
 });

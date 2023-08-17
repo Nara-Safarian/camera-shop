@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchForm snapshot should be rendered correctly 1`] = `
+<div>
+  <div
+    class="form-search  reset-invisible"
+  >
+    <form>
+      <label>
+        <svg
+          aria-hidden="true"
+          class="form-search__icon"
+          height="16"
+          width="16"
+        >
+          <use
+            xlink:href="#icon-lens"
+          />
+        </svg>
+        <input
+          autocomplete="off"
+          class="form-search__input"
+          placeholder="Поиск по сайту"
+          type="text"
+          value=""
+        />
+      </label>
+      <ul
+        class="form-search__select-list"
+      />
+    </form>
+    <button
+      class="form-search__reset"
+      type="reset"
+    >
+      <svg
+        aria-hidden="true"
+        height="10"
+        width="10"
+      >
+        <use
+          xlink:href="#icon-close"
+        />
+      </svg>
+      <span
+        class="visually-hidden"
+      >
+        Сбросить поиск
+      </span>
+    </button>
+  </div>
+</div>
+`;

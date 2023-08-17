@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react';
-import App from './app';
+import { render, screen } from '@testing-library/react';
+import SearchForm from './search-form';
 
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
@@ -8,6 +8,7 @@ import { initialState as productCardInitialState } from '../../store/product-car
 import { initialState as bannerInitialState } from '../../store/banner/banner';
 import { initialState as reviewsCardInitialState } from '../../store/reviews/reviews';
 import { NameSpace } from '../../consts';
+import { BrowserRouter } from 'react-router-dom';
 const mockStore = configureMockStore();
 const store = mockStore({
   [NameSpace.Products]: {...productsInitialState},
@@ -18,11 +19,13 @@ const store = mockStore({
 store.dispatch = jest.fn();
 window.scrollTo = jest.fn();
 
-test('App snapshot should be rendered correctly', () => {
-  const {container} = render(
-    <Provider store={store}>
-      <App />
-    </Provider>
+test('SearchForm should be rendered correctly', () => {
+  render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <SearchForm />
+      </Provider>
+    </BrowserRouter>
   );
-  expect(container).toMatchSnapshot();
+  expect(screen.getByText('Сбросить поиск')).toBeInTheDocument();
 });

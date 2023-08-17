@@ -4,20 +4,19 @@ import Footer from '../../components/footer/footer';
 import MainCatalogFilters from '../../components/main-catalog-filters/main-catalog-filters';
 import Navigation from '../../components/navigation/navigation';
 import ProductList from '../../components/product-list/product-list';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { getBanner } from '../../store/banner/selectors';
-import { getAllProducts } from '../../store/products/selectors';
-import { fetchAllProductsAction, fetchBannerAction } from '../../store/api-actions';
+import { getAllProducts, isAllProductsLoading } from '../../store/products/selectors';
 import Pagination from '../../components/pagination/pagination';
 import { Product } from '../../types/product';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
+import CatalogSort from '../../components/catalog-sort/catalog-sort';
+import Loader from '../../components/loader/loader';
 
 const CARDS_PER_PAGE = 9;
 const getTotalPageCount = (cardCount: number) =>
   Math.ceil(cardCount / CARDS_PER_PAGE);
-
-
 const getElementsForPage = (array: Product[], currentPage: number) => {
   const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
   const endIndex = startIndex + CARDS_PER_PAGE;
@@ -27,14 +26,10 @@ const getElementsForPage = (array: Product[], currentPage: number) => {
 
 function MainCatalog(): JSX.Element {
   const allProducts = useAppSelector(getAllProducts);
+  const showLoader = useAppSelector(isAllProductsLoading);
   const currentBanner = useAppSelector(getBanner);
-  const dispatch = useAppDispatch();
   const [showCatalogAddItemSuccess, setShowCatalogAddItemSuccess] = useState(false);
 
-  useEffect(() => {
-    dispatch(fetchBannerAction());
-    dispatch(fetchAllProductsAction());
-  }, [dispatch]);
 
   const totalPageCount = useMemo(() => getTotalPageCount(allProducts.length), [allProducts.length]);
 
@@ -172,49 +167,20 @@ function MainCatalog(): JSX.Element {
                     <MainCatalogFilters />
                   </div>
                   <div className="catalog__content">
-                    <div className="catalog-sort">
-                      <form action="#">
-                        <div className="catalog-sort__inner">
-                          <p className="title title--h5">Сортировать:</p>
-                          <div className="catalog-sort__type">
-                            <div className="catalog-sort__btn-text">
-                              <input type="radio" id="sortPrice" name="sort" />
-                              <label htmlFor="sortPrice">по цене</label>
-                            </div>
-                            <div className="catalog-sort__btn-text">
-                              <input type="radio" id="sortPopular" name="sort" />
-                              <label htmlFor="sortPopular">по популярности</label>
-                            </div>
+                    <CatalogSort />
+                    {
+                      showLoader && <Loader/>
+                    }
+                    {
+                      !showLoader && (visibleProducts.length > 0 ? (
+                        <>
+                          <div className="cards catalog__cards">
+                            <ProductList cameras={visibleProducts} onProductBuyClick={handleAddToBasket} />
                           </div>
-                          <div className="catalog-sort__order">
-                            <div className="catalog-sort__btn catalog-sort__btn--up">
-                              <input type="radio" id="up" name="sort-icon" aria-label="По возрастанию" />
-                              <label htmlFor="up">
-                                <svg width="16" height="14" aria-hidden="true">
-                                  <use xlinkHref="#icon-sort"></use>
-                                </svg>
-                              </label>
-                            </div>
-                            <div className="catalog-sort__btn catalog-sort__btn--down">
-                              <input type="radio" id="down" name="sort-icon" aria-label="По убыванию" />
-                              <label htmlFor="down">
-                                <svg width="16" height="14" aria-hidden="true">
-                                  <use xlinkHref="#icon-sort"></use>
-                                </svg>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                    <div className="cards catalog__cards">
-                      {
-                        visibleProducts && (
-                          <ProductList cameras={visibleProducts} onProductBuyClick={handleAddToBasket} />
-                        )
-                      }
-                    </div>
-                    <Pagination activePage={currentPage} pagesCount={totalPageCount}/>
+                          <Pagination activePage={currentPage} pagesCount={totalPageCount} />
+                        </>
+                      ) : (<div className='found-nothing'>по вашему запросу ничего не найдено</div>))
+                    }
                   </div>
                 </div>
               </div>

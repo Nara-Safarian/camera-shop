@@ -1,0 +1,9 @@
+.form-search.reset-visible .form-search__reset {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.form-search.reset-invisible .form-search__reset {
+  display: none;
+}

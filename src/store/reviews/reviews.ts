@@ -3,7 +3,7 @@ import { NameSpace } from '../../consts';
 import { Reviews } from '../../types/state';
 import { addReviewToStart, setAllReviews } from '../actions';
 
-const initialState: Reviews = {
+export const initialState: Reviews = {
   allReviews: [],
 };
 
