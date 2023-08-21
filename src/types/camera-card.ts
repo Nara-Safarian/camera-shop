@@ -9,5 +9,5 @@ export type CameraCard = {
   'previewImg2x': string;
   'previewImgWebp': string;
   'previewImgWebp2x': string;
-  'reviews'?: Review[]
+  'reviews'?: Review[];
 };
