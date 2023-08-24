@@ -90,7 +90,7 @@ test('Reducer products: should filterAndSortCards', () => {
     allProducts: [],
     searchProducts: [],
     originalProducts: [],
-    filter: {...DEFAULT_FILTER, minPricePlaceholder: Number.MAX_SAFE_INTEGER, maxPricePlaceholder: Number.MIN_SAFE_INTEGER},
+    filter: {...DEFAULT_FILTER},
     sorting: {...DEFAULT_SORTING}
   });
 });

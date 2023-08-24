@@ -13,6 +13,7 @@ import { useSearchParams, useLocation } from 'react-router-dom';
 import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
 import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Loader from '../../components/loader/loader';
+import useFilterSearch from '../../hooks/use-filter-search';
 
 const CARDS_PER_PAGE = 9;
 const getTotalPageCount = (cardCount: number) =>
@@ -29,7 +30,7 @@ function MainCatalog(): JSX.Element {
   const showLoader = useAppSelector(isAllProductsLoading);
   const currentBanner = useAppSelector(getBanner);
   const [showCatalogAddItemSuccess, setShowCatalogAddItemSuccess] = useState(false);
-
+  useFilterSearch();
 
   const totalPageCount = useMemo(() => getTotalPageCount(allProducts.length), [allProducts.length]);
 

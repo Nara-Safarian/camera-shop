@@ -83,11 +83,11 @@ export const products = createSlice({
             }
           }
 
-          if (state.filter.minPrice !== undefined && state.filter.minPrice < allProductsMinMax.minPrice) {
+          if (state.filter.minPrice !== undefined && allProductsMinMax.minPrice !== undefined && state.filter.minPrice < allProductsMinMax.minPrice) {
             state.filter.minPrice = allProductsMinMax.minPrice;
           }
 
-          if (state.filter.maxPrice !== undefined && state.filter.maxPrice > allProductsMinMax.maxPrice) {
+          if (state.filter.maxPrice !== undefined && allProductsMinMax.maxPrice !== undefined && state.filter.maxPrice > allProductsMinMax.maxPrice) {
             state.filter.maxPrice = allProductsMinMax.maxPrice;
           }
 
@@ -178,9 +178,9 @@ export const products = createSlice({
 }
 );
 
-function getMinMaxPrice(productsArray: Product[]): {minPrice: number; maxPrice: number} {
-  let minPrice = Number.MAX_SAFE_INTEGER;
-  let maxPrice = Number.MIN_SAFE_INTEGER;
+function getMinMaxPrice(productsArray: Product[]): {minPrice?: number; maxPrice?: number} {
+  let minPrice: number | undefined = Number.MAX_SAFE_INTEGER;
+  let maxPrice: number | undefined = Number.MIN_SAFE_INTEGER;
 
   for (const product of productsArray) {
     if (product.price < minPrice) {
@@ -189,6 +189,14 @@ function getMinMaxPrice(productsArray: Product[]): {minPrice: number; maxPrice: 
     if (product.price > maxPrice) {
       maxPrice = product.price;
     }
+  }
+
+  if (minPrice === Number.MAX_SAFE_INTEGER) {
+    minPrice = undefined;
+  }
+
+  if (maxPrice === Number.MIN_SAFE_INTEGER) {
+    maxPrice = undefined;
   }
 
   return {minPrice, maxPrice};
