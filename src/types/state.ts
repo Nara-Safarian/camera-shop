@@ -30,8 +30,10 @@ export type Filter = {
   category?: ProductCategory;
   level?: Array<ProductLevel>;
   type?: Array<ProductType>;
-  minPrice: number;
-  maxPrice: number;
+  minPrice?: number;
+  maxPrice?: number;
+  minPricePlaceholder?: number;
+  maxPricePlaceholder?: number;
 };
 
 export type Products = {

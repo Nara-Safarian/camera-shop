@@ -46,12 +46,12 @@ function MainCatalogFilters(): JSX.Element {
   const [minPrice, setMinPrice] = useState(filter.minPrice);
   const [maxPrice, setMaxPrice] = useState(filter.maxPrice);
 
-  const handleDebouncedChangeMinPrice = useCallback(debounce((newMinPrice: number) => {
+  const handleDebouncedChangeMinPrice = useCallback(debounce((newMinPrice?: number) => {
     handleChangeFilter({minPrice: newMinPrice});
   }, DEBOUNCE_MS), [handleChangeFilter]);
 
   const handleChangeMinPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let newValue = parseFloat(event.target.value);
+    let newValue: number | undefined = parseFloat(event.target.value);
     if (isNaN(newValue)) {
       newValue = filter.minPrice;
     }
@@ -59,12 +59,12 @@ function MainCatalogFilters(): JSX.Element {
     handleDebouncedChangeMinPrice(newValue);
   };
 
-  const handleDebouncedChangeMaxPrice = useCallback(debounce((newMaxPrice: number) => {
+  const handleDebouncedChangeMaxPrice = useCallback(debounce((newMaxPrice?: number) => {
     handleChangeFilter({maxPrice: newMaxPrice});
   }, DEBOUNCE_MS), [handleChangeFilter]);
 
   const handleChangeMaxPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let newValue = parseFloat(event.target.value);
+    let newValue: number | undefined = parseFloat(event.target.value);
     if (isNaN(newValue)) {
       newValue = filter.maxPrice;
     }
@@ -91,12 +91,12 @@ function MainCatalogFilters(): JSX.Element {
           <div className="catalog-filter__price-range">
             <div className="custom-input">
               <label>
-                <input type="number" name="price" placeholder="от" value={minPrice} onChange={handleChangeMinPrice}/>
+                <input type="number" name="price" placeholder={filter.minPricePlaceholder?.toString() ?? 'от'} value={minPrice} onChange={handleChangeMinPrice}/>
               </label>
             </div>
             <div className="custom-input">
               <label>
-                <input type="number" name="priceUp" placeholder="до" value={maxPrice} onChange={handleChangeMaxPrice}/>
+                <input type="number" name="priceUp" placeholder={filter.maxPricePlaceholder?.toString() ?? 'до'} value={maxPrice} onChange={handleChangeMaxPrice}/>
               </label>
             </div>
           </div>

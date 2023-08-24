@@ -15,8 +15,10 @@ export const DEFAULT_FILTER = {
   category: undefined,
   level: undefined,
   type: undefined,
-  minPrice: 0,
-  maxPrice: 0,
+  minPrice: undefined,
+  maxPrice: undefined,
+  minPricePlaceholder: undefined,
+  maxPricePlaceholder: undefined
 };
 
 export const initialState: Products = {
@@ -44,11 +46,11 @@ export const products = createSlice({
         state.allProducts = action.payload;
         if (action.payload.length) {
           const {minPrice, maxPrice} = getMinMaxPrice(action.payload);
-          state.filter.minPrice = minPrice;
-          state.filter.maxPrice = maxPrice;
+          state.filter.minPricePlaceholder = minPrice;
+          state.filter.maxPricePlaceholder = maxPrice;
         } else {
-          state.filter.minPrice = 0;
-          state.filter.maxPrice = 0;
+          state.filter.minPricePlaceholder = undefined;
+          state.filter.maxPricePlaceholder = undefined;
         }
       })
       .addCase(searchCards, (state, action) => {
@@ -64,36 +66,36 @@ export const products = createSlice({
           ...action.payload.filter,
         };
 
-        const hasPriceFilter = action.payload.filter?.maxPrice || action.payload.filter?.minPrice;
+        const hasPriceFilter = action.payload.filter?.maxPrice !== undefined || action.payload.filter?.minPrice !== undefined;
         if (hasPriceFilter) {
           const allProductsMinMax = getMinMaxPrice(state.originalProducts);
-          if (state.filter.minPrice < 0 || state.filter.maxPrice < 0) {
-            if (state.filter.minPrice < 0) {
+          if ((state.filter.minPrice !== undefined && state.filter.minPrice < 0) || (state.filter.maxPrice !== undefined && state.filter.maxPrice < 0)) {
+            if (state.filter.minPrice !== undefined && state.filter.minPrice < 0) {
               state.filter.minPrice = allProductsMinMax.minPrice;
             }
 
-            if (state.filter.maxPrice < 0) {
+            if (state.filter.maxPrice !== undefined && state.filter.maxPrice < 0) {
               state.filter.maxPrice = allProductsMinMax.maxPrice;
             }
           }
 
-          if (state.filter.minPrice < allProductsMinMax.minPrice) {
+          if (state.filter.minPrice !== undefined && state.filter.minPrice < allProductsMinMax.minPrice) {
             state.filter.minPrice = allProductsMinMax.minPrice;
           }
 
-          if (state.filter.maxPrice > allProductsMinMax.maxPrice) {
+          if (state.filter.maxPrice !== undefined && state.filter.maxPrice > allProductsMinMax.maxPrice) {
             state.filter.maxPrice = allProductsMinMax.maxPrice;
           }
 
-          if (action.payload.filter?.maxPrice && action.payload.filter?.maxPrice < state.filter.minPrice) {
+          if (state.filter.minPrice !== undefined && action.payload.filter?.maxPrice && action.payload.filter?.maxPrice < state.filter.minPrice) {
             state.filter.maxPrice = state.filter.minPrice;
           }
 
-          if (action.payload.filter?.minPrice && action.payload.filter?.minPrice > state.filter.maxPrice) {
+          if (state.filter.maxPrice !== undefined && action.payload.filter?.minPrice && action.payload.filter?.minPrice > state.filter.maxPrice) {
             state.filter.minPrice = state.filter.maxPrice;
           }
 
-          newAllProducts = newAllProducts.filter((product) => product.price >= state.filter.minPrice && product.price <= state.filter.maxPrice);
+          newAllProducts = newAllProducts.filter((product) => product.price >= (state.filter.minPrice ?? Number.MIN_SAFE_INTEGER) && product.price <= (state.filter.maxPrice ?? Number.MAX_SAFE_INTEGER));
         }
 
         if (state.filter.category) {
@@ -155,17 +157,6 @@ export const products = createSlice({
         }
 
         state.allProducts = newAllProducts;
-
-        if (!hasPriceFilter) {
-          if (newAllProducts.length) {
-            const {minPrice, maxPrice} = getMinMaxPrice(newAllProducts);
-            state.filter.minPrice = minPrice;
-            state.filter.maxPrice = maxPrice;
-          } else {
-            state.filter.minPrice = 0;
-            state.filter.maxPrice = 0;
-          }
-        }
       })
       .addCase(fetchAllProductsAction.pending, (state) => {
         state.isAllProductsLoading = true;
