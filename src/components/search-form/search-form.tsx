@@ -13,6 +13,7 @@ function SearchForm(): JSX.Element {
   }, [dispatch]);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const wrapperProductsRef = useRef<HTMLUListElement>(null);
   const childrenRefs = useRef<Array<HTMLLIElement | null>>([]);
   const searchProducts = useAppSelector(getSearchProducts);
@@ -87,6 +88,7 @@ function SearchForm(): JSX.Element {
           </svg>
           <input
             className="form-search__input"
+            ref={searchInputRef}
             type="text"
             value={value}
             autoComplete="off"
@@ -107,6 +109,7 @@ function SearchForm(): JSX.Element {
       </form>
       <button className="form-search__reset" type="reset" onClick={() => {
         setValue('');
+        searchInputRef.current?.focus();
       }}
       >
         <svg width="10" height="10" aria-hidden="true">

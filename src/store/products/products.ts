@@ -54,6 +54,10 @@ export const products = createSlice({
         }
       })
       .addCase(searchCards, (state, action) => {
+        if (!action.payload) {
+          state.searchProducts = [];
+          return;
+        }
         state.searchProducts = state.allProducts.filter((card) => card.name.toLowerCase().includes(action.payload.toLocaleLowerCase()));
       })
       .addCase(filterAndSortCards, (state, action) => {
@@ -156,6 +160,9 @@ export const products = createSlice({
           }
         }
 
+        const {minPrice, maxPrice} = getMinMaxPrice(newAllProducts);
+        state.filter.minPricePlaceholder = minPrice;
+        state.filter.maxPricePlaceholder = maxPrice;
         state.allProducts = newAllProducts;
       })
       .addCase(fetchAllProductsAction.pending, (state) => {

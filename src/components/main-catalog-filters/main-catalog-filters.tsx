@@ -91,12 +91,12 @@ function MainCatalogFilters(): JSX.Element {
           <div className="catalog-filter__price-range">
             <div className="custom-input">
               <label>
-                <input type="number" name="price" placeholder={filter.minPricePlaceholder?.toString() ?? 'от'} value={minPrice} onChange={handleChangeMinPrice}/>
+                <input type="number" name="price" placeholder={filter.minPricePlaceholder?.toString() ?? 'от'} value={minPrice ?? ''} onChange={handleChangeMinPrice}/>
               </label>
             </div>
             <div className="custom-input">
               <label>
-                <input type="number" name="priceUp" placeholder={filter.maxPricePlaceholder?.toString() ?? 'до'} value={maxPrice} onChange={handleChangeMaxPrice}/>
+                <input type="number" name="priceUp" placeholder={filter.maxPricePlaceholder?.toString() ?? 'до'} value={maxPrice ?? ''} onChange={handleChangeMaxPrice}/>
               </label>
             </div>
           </div>
@@ -155,7 +155,7 @@ function MainCatalogFilters(): JSX.Element {
             </label>
           </div>
         </fieldset>
-        <button className="btn catalog-filter__reset-btn" type="reset" onChange={handleResetFilter}>Сбросить фильтры
+        <button className="btn catalog-filter__reset-btn" type="reset" onClick={handleResetFilter}>Сбросить фильтры
         </button>
       </form>
     </div>

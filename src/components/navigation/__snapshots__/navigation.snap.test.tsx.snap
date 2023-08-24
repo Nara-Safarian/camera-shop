@@ -35,7 +35,7 @@ exports[`Navigation snapshot should be rendered correctly 1`] = `
           >
             <a
               class="main-nav__link"
-              href="catalog.html"
+              href="/"
             >
               Каталог
             </a>
