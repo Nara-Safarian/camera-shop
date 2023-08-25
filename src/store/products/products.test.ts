@@ -68,7 +68,7 @@ test('Reducer products: should setProductCards', () => {
     allProducts,
     searchProducts: [],
     originalProducts: allProducts,
-    filter: {...DEFAULT_FILTER, minPrice: 79000, maxPrice: 149990},
+    filter: {...DEFAULT_FILTER, minPricePlaceholder: 79000, maxPricePlaceholder: 149990},
     sorting: {...DEFAULT_SORTING}
   });
 });
