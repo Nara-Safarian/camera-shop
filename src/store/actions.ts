@@ -14,3 +14,11 @@ export const setAllReviews = createAction<Review[]>(`${NameSpace.Reviews}/setAll
 export const addReviewToStart = createAction<Review>(`${NameSpace.Reviews}/addReviewToStart`);
 export const searchCards = createAction<string>(`${NameSpace.Products}/searchCards`);
 export const filterAndSortCards = createAction<{filter?: Partial<Filter>; sorting?: Partial<Sorting>}>(`${NameSpace.Products}/filterAndSortCards`);
+
+export const addProductToBasket = createAction<Product>(`${NameSpace.Basket}/addProductToBasket`);
+export const decreaseProductFromBasket = createAction<Product>(`${NameSpace.Basket}/decreaseProductFromBasket`);
+export const updateProductAmount = createAction<{product: Product; amount: number}>(`${NameSpace.Basket}/updateProductAmount`);
+export const removeProductFromBasket = createAction<Product>(`${NameSpace.Basket}/removeProductFromBasket`);
+export const clearBasket = createAction<void>(`${NameSpace.Basket}/clearBasket`);
+export const setPromocode = createAction<string>(`${NameSpace.Basket}/setPromocode`);
+export const clearOrderState = createAction<void>(`${NameSpace.Basket}/clearOrderState`);

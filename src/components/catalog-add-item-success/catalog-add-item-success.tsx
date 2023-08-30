@@ -1,6 +1,8 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import useEscapeFromModal from '../../hooks/use-escape-from-modal';
 import useLockScroll from '../../hooks/use-lock-scroll';
+import { Link } from 'react-router-dom';
+import useRepeatNavigation from '../../hooks/use-repeat-navigation';
 
 type CatalogAddItemSuccessProps = {
   isActive: boolean;
@@ -15,50 +17,7 @@ function CatalogAddItemSuccess({isActive, onClose}: CatalogAddItemSuccessProps):
   const firstElementRef = useRef<HTMLAnchorElement>(null);
   const lastElementRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (!isActive) {
-      return;
-    }
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Tab') {
-        if (e.shiftKey) {
-          // If Shift + Tab is pressed, focus the last element
-          if (document.activeElement === firstElementRef.current) {
-            e.preventDefault();
-            if (lastElementRef.current) {
-              lastElementRef.current.focus();
-            }
-          }
-        } else {
-          // If Tab is pressed, focus the first element
-          if (document.activeElement === lastElementRef.current) {
-            e.preventDefault();
-            if (firstElementRef.current) {
-              firstElementRef.current.focus();
-            }
-          }
-        }
-      }
-    };
-
-    setTimeout(() => {
-      if (firstElementRef.current) {
-        firstElementRef.current.focus();
-      }
-    }, 10);
-
-    const modalContainer = modalContainerRef.current;
-    if (modalContainer) {
-      modalContainer.addEventListener('keydown', handleKeyDown);
-    }
-
-    return () => {
-      if (modalContainer) {
-        modalContainer.removeEventListener('keydown', handleKeyDown);
-      }
-    };
-  }, [isActive]);
+  useRepeatNavigation({isActive, modalContainerRef, firstElementRef, lastElementRef});
 
   return (
     <>
@@ -81,8 +40,15 @@ function CatalogAddItemSuccess({isActive, onClose}: CatalogAddItemSuccessProps):
             <svg className="modal__icon" width="86" height="80" aria-hidden="true">
               <use xlinkHref="#icon-success"></use>
             </svg>
-            <div className="modal__buttons"><a ref={firstElementRef} className="btn btn--transparent modal__btn" href="#">Продолжить покупки</a>
-              <button className="btn btn--purple modal__btn modal__btn--fit-width">Перейти в корзину</button>
+            <div className="modal__buttons">
+              <a ref={firstElementRef} className="btn btn--transparent modal__btn" href="#" onClick={(e) => {
+                e.preventDefault();
+                onClose();
+              }}
+              >
+                Продолжить покупки
+              </a>
+              <Link className="btn btn--purple modal__btn modal__btn--fit-width" to="/orders">Перейти в корзину</Link>
             </div>
             <button ref={lastElementRef} className="cross-btn" type="button" aria-label="Закрыть попап" onClick={onClose}>
               <svg width="10" height="10" aria-hidden="true">

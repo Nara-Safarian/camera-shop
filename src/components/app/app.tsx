@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import NotFoundPage from '../../pages/not-found/not-found';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
+import Basket from '../../pages/basket/basket';
 
 function App(): JSX.Element {
   return (
@@ -17,6 +18,10 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Product}
           element={<Product />}
+        />
+        <Route
+          path={AppRoute.Basket}
+          element={<Basket />}
         />
         <Route path='*'
           element={<NotFoundPage />}

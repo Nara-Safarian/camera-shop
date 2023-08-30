@@ -30,7 +30,7 @@ exports[`BasketSuccess snapshot should be rendered correctly 1`] = `
     </symbol>
   </svg>
   <div
-    class="modal is-active modal--narrow"
+    class="modal  modal--narrow"
   >
     <div
       class="modal__wrapper"

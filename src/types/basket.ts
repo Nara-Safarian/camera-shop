@@ -1,15 +1,6 @@
-import { ProductCategory, ProductLevel, ProductType } from '../enums';
+import { Product } from './product';
 
-export type Basket = {
-  'id': number;
-  'price': number;
-  'name': string;
-  'vendorCode': string;
-  'type': ProductType;
-  'category': ProductCategory;
-  'previewImg': string;
-  'level': ProductLevel;
-  'previewImg2x': string;
-  'previewImgWebp': string;
-  'previewImgWebp2x': string;
-};
+export type Basket = Array<{
+  product: Product;
+  amount: number;
+}>;

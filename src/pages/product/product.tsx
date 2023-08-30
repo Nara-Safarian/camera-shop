@@ -4,7 +4,7 @@ import Navigation from '../../components/navigation/navigation';
 import ProductReviewModal from '../../components/product-review-modal/product-review-modal';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentProduct, getSimilarProducts } from '../../store/product-card/selectors';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { fetchCurrentProductAction, fetchSimilarProductsAction } from '../../store/api-actions';
 import Tabs from '../../components/tabs/tabs';
 import ProductReviewsAll from '../../components/product-reviews-all/product-reviews-all';
@@ -13,6 +13,10 @@ import SimilarProducts from '../../components/similar-products/similar-products'
 import ProductReviewSuccess from '../../components/product-review-success/product-review-success';
 import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
 import ProductCardRating from '../../components/product-card-rating/product-card-rating';
+import BasketAddItemModal from '../../components/basket-add-item-modal/basket-add-item-modal';
+import { getAllProducts } from '../../store/products/selectors';
+import { addProductToBasket } from '../../store/actions';
+import { Product as ProductType } from '../../types/product';
 
 function Product(): JSX.Element | null {
   const [showReviewModal, setShowReviewModal] = useState(false);
@@ -22,6 +26,9 @@ function Product(): JSX.Element | null {
   const similarProducts = useAppSelector(getSimilarProducts);
   const {id} = useParams();
   const dispatch = useAppDispatch();
+  const [showBasketAddItem, setShowBasketAddItem] = useState(false);
+  const [currentModalProduct, setCurrentModalProduct] = useState<ProductType>();
+  const allProducts = useAppSelector(getAllProducts);
 
 
   useEffect(() => {
@@ -50,12 +57,27 @@ function Product(): JSX.Element | null {
     setShowSuccessModal(true);
   };
 
-  const handleAddToBasket = () => {
-    setShowCatalogAddItemSuccess(true);
+  const handleAddToBasket = (productId: number) => {
+    setShowBasketAddItem(true);
+    setCurrentModalProduct(allProducts.find((product) => product.id === productId));
   };
 
   const handleOnCloseCatalogAddItemSuccess = () => {
     setShowCatalogAddItemSuccess(false);
+  };
+
+  const handleAddProduct = (productId: number) => {
+    setShowCatalogAddItemSuccess(true);
+    setShowBasketAddItem(false);
+    const foundProduct = allProducts.find((product) => product.id === productId);
+    if (!foundProduct) {
+      return;
+    }
+    dispatch(addProductToBasket(foundProduct));
+  };
+
+  const handleOnCloseBasketModal = () => {
+    setShowBasketAddItem(false);
   };
 
   return (
@@ -147,18 +169,18 @@ function Product(): JSX.Element | null {
               <div className="container">
                 <ul className="breadcrumbs__list">
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link" href="/">Главная
+                    <Link className="breadcrumbs__link" to="/">Главная
                       <svg width="5" height="8" aria-hidden="true">
                         <use xlinkHref="#icon-arrow-mini"></use>
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link" href="/">Каталог
+                    <Link className="breadcrumbs__link" to="/">Каталог
                       <svg width="5" height="8" aria-hidden="true">
                         <use xlinkHref="#icon-arrow-mini"></use>
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item"><span className="breadcrumbs__link breadcrumbs__link--active">{productCard?.name}</span>
                   </li>
@@ -179,7 +201,7 @@ function Product(): JSX.Element | null {
                       <h1 className="title title--h3">{productCard.name}</h1>
                       <ProductCardRating reviewCount={productCard.reviewCount} reviews={productCard.reviews} />
                       <p className="product__price"><span className="visually-hidden">Цена:</span>{productCard.price}</p>
-                      <button className="btn btn--purple" type="button" onClick={handleAddToBasket}>
+                      <button className="btn btn--purple" type="button" onClick={() => handleAddToBasket(productCard.id)}>
                         <svg width="24" height="16" aria-hidden="true">
                           <use xlinkHref="#icon-add-basket"></use>
                         </svg>Добавить в корзину
@@ -192,7 +214,7 @@ function Product(): JSX.Element | null {
             </div>
             {similarProducts.length > 0 && (
               <div className="page-content__section">
-                <SimilarProducts products={similarProducts} />
+                <SimilarProducts products={similarProducts} onProductBuyClick={handleAddToBasket} />
               </div>
             )}
             <div className="page-content__section">
@@ -213,6 +235,7 @@ function Product(): JSX.Element | null {
         {
           !!id && <ProductReviewModal isActive={showReviewModal} onClose={handleOnClose} onSubmit={handleOnSubmit} cameraId={id}/>
         }
+        <BasketAddItemModal onClose={handleOnCloseBasketModal} isActive={showBasketAddItem} product={currentModalProduct} onAddProduct={handleAddProduct} />
         <ProductReviewSuccess onClose={handleOnCloseSuccessModal} isActive={showSuccessModal} />
         <CatalogAddItemSuccess onClose={handleOnCloseCatalogAddItemSuccess} isActive={showCatalogAddItemSuccess} />
         <Footer />
