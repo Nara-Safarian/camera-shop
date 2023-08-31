@@ -3,17 +3,15 @@ import { Product } from '../../types/product';
 import ProductCard from '../product-card/product-card';
 import { useAppSelector } from '../../hooks';
 import { getAllProducts } from '../../store/products/selectors';
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import { Provider } from 'react-redux';
-const mockStore = configureMockStore();
 
 type SimilarProductsProps = {
   products: Product[];
+  onProductBuyClick: (id: number) => void;
 }
 
 const CARD_LIMIT = 3;
 
-function SimilarProducts({products}: SimilarProductsProps): JSX.Element {
+function SimilarProducts({products, onProductBuyClick}: SimilarProductsProps): JSX.Element {
   const [page, setPage] = useState(0);
   const allProducts = useAppSelector(getAllProducts);
   const lastPage = products.length === 0 ? 0 : (Math.ceil(products.length / CARD_LIMIT) - 1);
@@ -51,40 +49,38 @@ function SimilarProducts({products}: SimilarProductsProps): JSX.Element {
   }, [page]);
 
   return (
-    <Provider store={mockStore({})}>
-      <section className="product-similar">
-        <div className="container">
-          <h2 className="title title--h3">Похожие товары</h2>
-          <div className="product-similar__slider">
-            <div className="product-similar__slider-list" ref={sliderContentRef}>
-              {
-                products.map((product, index) => {
-                  const startIndex = page * CARD_LIMIT;
-                  const endIndex = startIndex + CARD_LIMIT;
+    <section className="product-similar">
+      <div className="container">
+        <h2 className="title title--h3">Похожие товары</h2>
+        <div className="product-similar__slider">
+          <div className="product-similar__slider-list" ref={sliderContentRef}>
+            {
+              products.map((product, index) => {
+                const startIndex = page * CARD_LIMIT;
+                const endIndex = startIndex + CARD_LIMIT;
 
-                  const isActive = index >= startIndex && index < endIndex;
-                  const productWithReview: Product = ({
-                    ...product,
-                    reviews: allProducts.find((allProduct) => allProduct.id === product.id)?.reviews || []
-                  });
-                  return (<ProductCard product={productWithReview} key={product.id} isActive={isActive}/>);
-                })
-              }
-            </div>
-            <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled={isLeftButtonDisable} onClick={handleClickLeft} style={{pointerEvents: isLeftButtonDisable ? 'none' : 'all'}}>
-              <svg width="7" height="12" aria-hidden="true">
-                <use xlinkHref="#icon-arrow"></use>
-              </svg>
-            </button>
-            <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" onClick={handleClickRight} style={{pointerEvents: isRightButtonDisable ? 'none' : 'all'}} disabled={isRightButtonDisable}>
-              <svg width="7" height="12" aria-hidden="true">
-                <use xlinkHref="#icon-arrow"></use>
-              </svg>
-            </button>
+                const isActive = index >= startIndex && index < endIndex;
+                const productWithReview: Product = ({
+                  ...product,
+                  reviews: allProducts.find((allProduct) => allProduct.id === product.id)?.reviews || []
+                });
+                return (<ProductCard product={productWithReview} key={product.id} isActive={isActive} onProductBuyClick={() => onProductBuyClick(product.id)}/>);
+              })
+            }
           </div>
+          <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled={isLeftButtonDisable} onClick={handleClickLeft} style={{pointerEvents: isLeftButtonDisable ? 'none' : 'all'}}>
+            <svg width="7" height="12" aria-hidden="true">
+              <use xlinkHref="#icon-arrow"></use>
+            </svg>
+          </button>
+          <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" onClick={handleClickRight} style={{pointerEvents: isRightButtonDisable ? 'none' : 'all'}} disabled={isRightButtonDisable}>
+            <svg width="7" height="12" aria-hidden="true">
+              <use xlinkHref="#icon-arrow"></use>
+            </svg>
+          </button>
         </div>
-      </section>
-    </Provider>
+      </div>
+    </section>
   );
 }
 

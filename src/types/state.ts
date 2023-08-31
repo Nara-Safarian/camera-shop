@@ -2,6 +2,7 @@ import { ProductCategory, ProductLevel, ProductType } from '../enums';
 import { store } from '../store';
 import { Banner } from './banner';
 import { Product } from './product';
+import { Basket as BasketType } from './basket';
 import { Review } from './reviews';
 
 
@@ -56,4 +57,11 @@ export type ProductCard = {
 
 export type Reviews = {
   allReviews: Review[];
+}
+
+export type Basket = {
+  basket: BasketType;
+  promocode: string;
+  orderCreated: boolean;
+  orderRejected: boolean;
 }

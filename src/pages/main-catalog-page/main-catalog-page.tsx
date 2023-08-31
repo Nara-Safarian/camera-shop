@@ -4,16 +4,18 @@ import Footer from '../../components/footer/footer';
 import MainCatalogFilters from '../../components/main-catalog-filters/main-catalog-filters';
 import Navigation from '../../components/navigation/navigation';
 import ProductList from '../../components/product-list/product-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getBanner } from '../../store/banner/selectors';
 import { getAllProducts, isAllProductsLoading } from '../../store/products/selectors';
 import Pagination from '../../components/pagination/pagination';
 import { Product } from '../../types/product';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
 import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Loader from '../../components/loader/loader';
 import useFilterSearch from '../../hooks/use-filter-search';
+import BasketAddItemModal from '../../components/basket-add-item-modal/basket-add-item-modal';
+import { addProductToBasket } from '../../store/actions';
 
 const CARDS_PER_PAGE = 9;
 const getTotalPageCount = (cardCount: number) =>
@@ -29,7 +31,10 @@ function MainCatalog(): JSX.Element {
   const allProducts = useAppSelector(getAllProducts);
   const showLoader = useAppSelector(isAllProductsLoading);
   const currentBanner = useAppSelector(getBanner);
+  const dispatch = useAppDispatch();
+  const [currentModalProduct, setCurrentModalProduct] = useState<Product>();
   const [showCatalogAddItemSuccess, setShowCatalogAddItemSuccess] = useState(false);
+  const [showBasketAddItem, setShowBasketAddItem] = useState(false);
   useFilterSearch();
 
   const totalPageCount = useMemo(() => getTotalPageCount(allProducts.length), [allProducts.length]);
@@ -46,8 +51,23 @@ function MainCatalog(): JSX.Element {
 
   const visibleProducts = useMemo(() => getElementsForPage(allProducts, currentPage), [currentPage, allProducts]);
 
-  const handleAddToBasket = () => {
+  const handleAddToBasket = (id: number) => {
+    setShowBasketAddItem(true);
+    setCurrentModalProduct(allProducts.find((product) => product.id === id));
+  };
+
+  const handleAddProduct = (id: number) => {
     setShowCatalogAddItemSuccess(true);
+    setShowBasketAddItem(false);
+    const foundProduct = allProducts.find((product) => product.id === id);
+    if (!foundProduct) {
+      return;
+    }
+    dispatch(addProductToBasket(foundProduct));
+  };
+
+  const handleOnCloseBasketModal = () => {
+    setShowBasketAddItem(false);
   };
 
   const handleOnCloseCatalogAddItemSuccess = () => {
@@ -149,11 +169,11 @@ function MainCatalog(): JSX.Element {
               <div className="container">
                 <ul className="breadcrumbs__list">
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link" href="/">Главная
+                    <Link className="breadcrumbs__link" to="/">Главная
                       <svg width="5" height="8" aria-hidden="true">
                         <use xlinkHref="#icon-arrow-mini"></use>
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item"><span className="breadcrumbs__link breadcrumbs__link--active">Каталог</span>
                   </li>
@@ -188,6 +208,7 @@ function MainCatalog(): JSX.Element {
             </section>
           </div>
         </main>
+        <BasketAddItemModal onClose={handleOnCloseBasketModal} isActive={showBasketAddItem} product={currentModalProduct} onAddProduct={handleAddProduct} />
         <CatalogAddItemSuccess onClose={handleOnCloseCatalogAddItemSuccess} isActive={showCatalogAddItemSuccess} />
         <Footer />
       </div>

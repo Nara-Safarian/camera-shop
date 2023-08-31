@@ -3,7 +3,7 @@ import ProductCard from '../product-card/product-card';
 
 type ProductCardProps = {
   cameras: CameraCard[];
-  onProductBuyClick: () => void;
+  onProductBuyClick: (id: number) => void;
 }
 
 function ProductList({cameras, onProductBuyClick}: ProductCardProps): JSX.Element {
@@ -11,7 +11,7 @@ function ProductList({cameras, onProductBuyClick}: ProductCardProps): JSX.Elemen
     <>
       {cameras.map((camera) => (
         <ProductCard
-          onProductBuyClick={onProductBuyClick}
+          onProductBuyClick={() => {onProductBuyClick(camera.id);}}
           key={camera.id}
           product={camera}
         />

@@ -1,4 +1,28 @@
-function BasketRemoveItem(): JSX.Element {
+import { useRef } from 'react';
+import useEscapeFromModal from '../../hooks/use-escape-from-modal';
+import useLockScroll from '../../hooks/use-lock-scroll';
+import useRepeatNavigation from '../../hooks/use-repeat-navigation';
+import { Product } from '../../types/product';
+
+type BasketRemoveItemProps = {
+  product?: Product;
+  onClose: () => void;
+  onRemove: () => void;
+  isActive: boolean;
+}
+
+function BasketRemoveItem({product, onClose, onRemove, isActive}: BasketRemoveItemProps): JSX.Element {
+  useEscapeFromModal(onClose);
+  useLockScroll(isActive);
+  const {previewImgWebp = '', previewImgWebp2x = '', previewImg2x = '', previewImg = '', name = ''} = product || {};
+
+
+  const modalContainerRef = useRef<HTMLDivElement>(null);
+  const firstElementRef = useRef<HTMLButtonElement>(null);
+  const lastElementRef = useRef<HTMLButtonElement>(null);
+
+  useRepeatNavigation({isActive, modalContainerRef, firstElementRef, lastElementRef});
+
   return (
     <>
       <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -7,36 +31,40 @@ function BasketRemoveItem(): JSX.Element {
         </symbol>
       </svg>
 
-      <div className="modal is-active">
+      <div ref={modalContainerRef} className={`modal ${isActive ? 'is-active' : ''}`}>
         <div className="modal__wrapper">
-          <div className="modal__overlay">
+          <div className="modal__overlay" onClick={onClose}>
           </div>
           <div className="modal__content">
             <p className="title title--h4">Удалить этот товар?</p>
             <div className="basket-item basket-item--short">
               <div className="basket-item__img">
                 <picture>
-                  <source type="image/webp" srcSet="img/content/img9.webp, img/content/img9@2x.webp 2x" />
-                  <img src="img/content/img9.jpg" srcSet="img/content/img9@2x.jpg 2x" width="140" height="120" alt="Фотоаппарат «Орлёнок»" />
+                  <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}/>
+                  <img src={previewImg} srcSet={`${previewImg2x} 2x`} width="140" height="120" alt={name}/>
                 </picture>
               </div>
               <div className="basket-item__description">
-                <p className="basket-item__title">Орлёнок</p>
+                <p className="basket-item__title">{product?.name}</p>
                 <ul className="basket-item__list">
-                  <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">O78DFGSD832</span>
+                  <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">{product?.vendorCode}</span>
                   </li>
-                  <li className="basket-item__list-item">Плёночная фотокамера</li>
-                  <li className="basket-item__list-item">Любительский уровень</li>
+                  <li className="basket-item__list-item">{product?.type} {product?.category.toLowerCase()}</li>
+                  <li className="basket-item__list-item">{product?.level} уровень</li>
                 </ul>
               </div>
             </div>
             <div className="modal__buttons">
-              <button className="btn btn--purple modal__btn modal__btn--half-width" type="button">Удалить
+              <button ref={firstElementRef} className="btn btn--purple modal__btn modal__btn--half-width" type="button" onClick={onRemove}>Удалить
               </button>
-              <a className="btn btn--transparent modal__btn modal__btn--half-width" href="#">Продолжить покупки
+              <a className="btn btn--transparent modal__btn modal__btn--half-width" href="#" onClick={(e) => {
+                e.preventDefault();
+                onClose();
+              }}
+              >Продолжить покупки
               </a>
             </div>
-            <button className="cross-btn" type="button" aria-label="Закрыть попап">
+            <button ref={lastElementRef} className="cross-btn" type="button" aria-label="Закрыть попап" onClick={onClose}>
               <svg width="10" height="10" aria-hidden="true">
                 <use xlinkHref="#icon-close"></use>
               </svg>

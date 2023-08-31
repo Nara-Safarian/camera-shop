@@ -325,7 +325,7 @@ exports[`App snapshot should be rendered correctly 1`] = `
               >
                 <a
                   class="main-nav__link"
-                  href="#"
+                  href="/"
                 >
                   Гарантии
                 </a>
@@ -335,7 +335,7 @@ exports[`App snapshot should be rendered correctly 1`] = `
               >
                 <a
                   class="main-nav__link"
-                  href="#"
+                  href="/"
                 >
                   Доставка
                 </a>
@@ -345,7 +345,7 @@ exports[`App snapshot should be rendered correctly 1`] = `
               >
                 <a
                   class="main-nav__link"
-                  href="#"
+                  href="/"
                 >
                   О компании
                 </a>
@@ -401,7 +401,7 @@ exports[`App snapshot should be rendered correctly 1`] = `
           </div>
           <a
             class="header__basket-link"
-            href="#"
+            href="/orders"
           >
             <svg
               aria-hidden="true"
@@ -837,6 +837,125 @@ exports[`App snapshot should be rendered correctly 1`] = `
       </div>
     </main>
     <div
+      class="modal "
+    >
+      <div
+        class="modal__wrapper"
+      >
+        <div
+          class="modal__overlay"
+        />
+        <div
+          class="modal__content"
+        >
+          <p
+            class="title title--h4"
+          >
+            Добавить товар в корзину
+          </p>
+          <div
+            class="basket-item basket-item--short"
+          >
+            <div
+              class="basket-item__img"
+            >
+              <picture>
+                <source
+                  srcset=",  2x"
+                  type="image/webp"
+                />
+                <img
+                  alt=""
+                  height="120"
+                  src=""
+                  srcset=" 2x"
+                  width="140"
+                />
+              </picture>
+            </div>
+            <div
+              class="basket-item__description"
+            >
+              <p
+                class="basket-item__title"
+              />
+              <ul
+                class="basket-item__list"
+              >
+                <li
+                  class="basket-item__list-item"
+                >
+                  <span
+                    class="basket-item__article"
+                  >
+                    Артикул:
+                  </span>
+                   
+                  <span
+                    class="basket-item__number"
+                  />
+                </li>
+                <li
+                  class="basket-item__list-item"
+                >
+                   
+                </li>
+                <li
+                  class="basket-item__list-item"
+                >
+                   уровень
+                </li>
+              </ul>
+              <p
+                class="basket-item__price"
+              >
+                <span
+                  class="visually-hidden"
+                >
+                  Цена:
+                </span>
+                 ₽
+              </p>
+            </div>
+          </div>
+          <div
+            class="modal__buttons"
+          >
+            <button
+              class="btn btn--purple modal__btn modal__btn--fit-width"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                height="16"
+                width="24"
+              >
+                <use
+                  xlink:href="#icon-add-basket"
+                />
+              </svg>
+              Добавить в корзину
+            </button>
+          </div>
+          <button
+            aria-label="Закрыть попап"
+            class="cross-btn"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              height="10"
+              width="10"
+            >
+              <use
+                xlink:href="#icon-close"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
       class="visually-hidden"
     >
       <svg
@@ -903,11 +1022,12 @@ exports[`App snapshot should be rendered correctly 1`] = `
             >
               Продолжить покупки
             </a>
-            <button
+            <a
               class="btn btn--purple modal__btn modal__btn--fit-width"
+              href="/orders"
             >
               Перейти в корзину
-            </button>
+            </a>
           </div>
           <button
             aria-label="Закрыть попап"

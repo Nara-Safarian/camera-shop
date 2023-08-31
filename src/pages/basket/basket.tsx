@@ -1,14 +1,96 @@
+import { useEffect, useState } from 'react';
+import BasketRemoveItem from '../../components/basket-remove-item/basket-remove-item';
 import Footer from '../../components/footer/footer';
 import Navigation from '../../components/navigation/navigation';
-import { Basket as BasketType } from '../../types/basket';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addProductToBasket, clearOrderState, decreaseProductFromBasket, removeProductFromBasket, setPromocode, updateProductAmount } from '../../store/actions';
+import { getBasket, getPromocode, orderCreated } from '../../store/basket/selectors';
+import { Product } from '../../types/product';
+import { createOrder } from '../../store/api-actions';
+import BasketSuccess from '../../components/basket-success/basket-success';
+import { PROMOCODES } from '../../consts';
+import { Link } from 'react-router-dom';
 
-type BasketProps = {
-  basket: BasketType;
-}
+function Basket(): JSX.Element {
+  const basket = useAppSelector(getBasket);
+  const promocodeFromStore = useAppSelector(getPromocode);
+  const orderCreatedFromStore = useAppSelector(orderCreated);
+  const dispatch = useAppDispatch();
+  const [showCloseRemoveModal, setShowCloseRemoveModal] = useState(false);
+  const [deletableProduct, setCurrentDeletableProduct] = useState<Product>();
+  const [promocodeState, setPromocodeState] = useState({
+    isValid: false,
+    isInvalid: false,
+    discount: PROMOCODES[promocodeFromStore] || 0,
+    promocode: ''
+  });
 
-function Basket({basket}: BasketProps): JSX.Element {
+  useEffect(() => {
+    setPromocodeState((state) => ({
+      ...state,
+      discount: PROMOCODES[promocodeFromStore] || 0,
+    }));
+  }, []);
+
+  const onCloseRemoveModal = () => {
+    setShowCloseRemoveModal(false);
+  };
+
+  const onRemoveProduct = () => {
+    setShowCloseRemoveModal(false);
+    if (!deletableProduct) {
+      return;
+    }
+    dispatch(removeProductFromBasket(deletableProduct));
+  };
+
+  const onClickRemoveProduct = (product: Product) => {
+    setShowCloseRemoveModal(true);
+    setCurrentDeletableProduct(product);
+  };
+
+  const fullPrice = basket.reduce((sum, {product, amount}) => sum + product.price * amount, 0);
+  const discount = promocodeState.discount;
+  const finalPrice = fullPrice - discount < 0 ? 0 : fullPrice - discount;
+
+  const handleChangePromocode = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPromocodeState((state) => ({
+      ...state,
+      promocode: event.target.value.trim()
+    }));
+  };
+
+  const onApplyPromocode = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    const promocode = promocodeState.promocode;
+    if (Object.keys(PROMOCODES).includes(promocode)) {
+      setPromocodeState({
+        isValid: true,
+        isInvalid: false,
+        discount: PROMOCODES[promocode],
+        promocode
+      });
+      dispatch(setPromocode(promocode));
+    } else {
+      setPromocodeState({
+        isValid: false,
+        isInvalid: true,
+        discount: 0,
+        promocode
+      });
+      dispatch(setPromocode(''));
+    }
+  };
+
+  const handleCreateOrder = () => {
+    dispatch(createOrder({
+      camerasIds: basket.map(({product}) => product.id),
+      coupon: promocodeState.promocode || promocodeFromStore
+    }));
+  };
+
   return (
-    <body>
+    <>
       <div className="visually-hidden">
         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
           <symbol id="icon-add-basket" viewBox="0 0 24 16">
@@ -96,18 +178,18 @@ function Basket({basket}: BasketProps): JSX.Element {
               <div className="container">
                 <ul className="breadcrumbs__list">
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link" href="/">Главная
+                    <Link className="breadcrumbs__link" to="/">Главная
                       <svg width="5" height="8" aria-hidden="true">
                         <use xlinkHref="#icon-arrow-mini"></use>
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link" href="/">Каталог
+                    <Link className="breadcrumbs__link" to="/">Каталог
                       <svg width="5" height="8" aria-hidden="true">
                         <use xlinkHref="#icon-arrow-mini"></use>
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item"><span className="breadcrumbs__link breadcrumbs__link--active">Корзина</span>
                   </li>
@@ -118,67 +200,78 @@ function Basket({basket}: BasketProps): JSX.Element {
               <div className="container">
                 <h1 className="title title--h2">Корзина</h1>
                 <ul className="basket__list">
-                  <li className="basket-item">
-                    <div className="basket-item__img">
-                      <picture>
-                        <source type="image/webp" srcSet="img/content/img9.webp, img/content/img9@2x.webp 2x" />
-                        <img src="img/content/img9.jpg" srcSet="img/content/img9@2x.jpg 2x" width="140" height="120" alt="Фотоаппарат «Орлёнок»" />
-                      </picture>
-                    </div>
-                    <div className="basket-item__description">
-                      <p className="basket-item__title">{basket.name}</p>
-                      <ul className="basket-item__list">
-                        <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">{basket.vendorCode}</span>
-                        </li>
-                        <li className="basket-item__list-item">Плёночная фотокамера</li>
-                        <li className="basket-item__list-item">{basket.level} уровень</li>
-                      </ul>
-                    </div>
-                    <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{basket.price}</p>
-                    <div className="quantity">
-                      <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара">
-                        <svg width="7" height="12" aria-hidden="true">
-                          <use xlinkHref="#icon-arrow"></use>
-                        </svg>
-                      </button>
-                      <label className="visually-hidden" htmlFor="counter1"></label>
-                      <input type="number" id="counter1" value="2" min="1" max="99" aria-label="количество товара" />
-                      <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
-                        <svg width="7" height="12" aria-hidden="true">
-                          <use xlinkHref="#icon-arrow"></use>
-                        </svg>
-                      </button>
-                    </div>
-                    <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>37 940 ₽</div>
-                    <button className="cross-btn" type="button" aria-label="Удалить товар">
-                      <svg width="10" height="10" aria-hidden="true">
-                        <use xlinkHref="#icon-close"></use>
-                      </svg>
-                    </button>
-                  </li>
+                  {
+                    basket.length === 0 && <div>В корзине нет товаров</div>
+                  }
+                  {
+                    basket.map(({product, amount}) => (
+                      <li className="basket-item" key={product.id}>
+                        <div className="basket-item__img">
+                          <picture>
+                            <source type="image/webp" srcSet={`${product.previewImgWebp}, ${product.previewImgWebp2x} 2x`}/>
+                            <img src={product.previewImg} srcSet={`${product.previewImg2x} 2x`} width="140" height="120" alt={product.name}/>
+                          </picture>
+                        </div>
+                        <div className="basket-item__description">
+                          <p className="basket-item__title">{product.name}</p>
+                          <ul className="basket-item__list">
+                            <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">{product.vendorCode}</span>
+                            </li>
+                            <li className="basket-item__list-item">{product.type} {product.category.toLowerCase()}</li>
+                            <li className="basket-item__list-item">{product.level} уровень</li>
+                          </ul>
+                        </div>
+                        <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{product.price} ₽</p>
+                        <div className="quantity">
+                          <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={() => dispatch(decreaseProductFromBasket(product))}>
+                            <svg width="7" height="12" aria-hidden="true">
+                              <use xlinkHref="#icon-arrow"></use>
+                            </svg>
+                          </button>
+                          <label className="visually-hidden" htmlFor="counter1"></label>
+                          <input type="number" id="counter1" value={amount} min="1" max="99" onChange={(e) => {
+                            const newValue = isNaN(Number(e.target.value)) ? amount : Number(e.target.value);
+                            dispatch(updateProductAmount({product, amount: newValue}));
+                          }} aria-label="количество товара"
+                          />
+                          <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара" onClick={() => dispatch(addProductToBasket(product))}>
+                            <svg width="7" height="12" aria-hidden="true">
+                              <use xlinkHref="#icon-arrow"></use>
+                            </svg>
+                          </button>
+                        </div>
+                        <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{amount * product.price} ₽</div>
+                        <button className="cross-btn" type="button" aria-label="Удалить товар" onClick={() => onClickRemoveProduct(product)}>
+                          <svg width="10" height="10" aria-hidden="true">
+                            <use xlinkHref="#icon-close"></use>
+                          </svg>
+                        </button>
+                      </li>
+                    ))
+                  }
                 </ul>
                 <div className="basket__summary">
                   <div className="basket__promo">
                     <p className="title title--h4">Если у вас есть промокод на скидку, примените его в этом поле</p>
                     <div className="basket-form">
                       <form action="#">
-                        <div className="custom-input">
+                        <div className={`custom-input ${promocodeState.isValid ? 'is-valid' : ''} ${promocodeState.isInvalid ? 'is-invalid' : ''}`}>
                           <label><span className="custom-input__label">Промокод</span>
-                            <input type="text" name="promo" placeholder="Введите промокод" />
+                            <input type="text" name="promo" placeholder="Введите промокод" onChange={handleChangePromocode} />
                           </label>
                           <p className="custom-input__error">Промокод неверный</p>
                           <p className="custom-input__success">Промокод принят!</p>
                         </div>
-                        <button className="btn" type="submit">Применить
+                        <button className="btn" type="submit" onClick={onApplyPromocode}>Применить
                         </button>
                       </form>
                     </div>
                   </div>
                   <div className="basket__summary-order">
-                    <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">111 390 ₽</span></p>
-                    <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">0 ₽</span></p>
-                    <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">111 390 ₽</span></p>
-                    <button className="btn btn--purple" type="submit">Оформить заказ
+                    <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{fullPrice} ₽</span></p>
+                    <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className={`basket__summary-value ${discount > 0 ? 'basket__summary-value--bonus' : ''}`}>{discount} ₽</span></p>
+                    <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{finalPrice} ₽</span></p>
+                    <button className="btn btn--purple" type="submit" disabled={!basket.length} onClick={handleCreateOrder}>Оформить заказ
                     </button>
                   </div>
                 </div>
@@ -186,9 +279,11 @@ function Basket({basket}: BasketProps): JSX.Element {
             </section>
           </div>
         </main>
+        <BasketRemoveItem onClose={onCloseRemoveModal} isActive={showCloseRemoveModal} onRemove={onRemoveProduct} product={deletableProduct}/>
+        <BasketSuccess onClose={() => dispatch(clearOrderState())} isActive={orderCreatedFromStore} />
         <Footer />
       </div>
-    </body>
+    </>
   );
 }
 

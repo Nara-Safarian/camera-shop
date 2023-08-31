@@ -1,9 +1,9 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state';
-import { APIRoute, NameSpace } from '../consts';
+import { APIRoute, NameSpace, PROMOCODES } from '../consts';
 import { Banner } from '../types/banner';
-import { addReviewToStart, setAllReviews, setBanner, setCurrentProduct, setProductCards, setSimilarProducts } from './actions';
+import { addReviewToStart, clearBasket, setAllReviews, setBanner, setCurrentProduct, setProductCards, setSimilarProducts } from './actions';
 import { Product } from '../types/product';
 import { Review } from '../types/reviews';
 
@@ -92,4 +92,22 @@ export const postReviewForCamera = createAsyncThunk<void, {
   },
 );
 
+export const createOrder = createAsyncThunk<void, {
+  camerasIds: number[];
+  coupon: string;
+}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.Reviews}/postReviewForCamera`,
+  async ({camerasIds, coupon}, {dispatch, extra: api}) => {
+    await api.post<void>(APIRoute.Orders, {
+      camerasIds,
+      // backend very strange. It doesn't accept empty coupon. That is why I am using first promocode
+      coupon: Object.keys(PROMOCODES).includes(coupon) ? coupon : 'camera-333'
+    });
+    dispatch(clearBasket());
+  },
+);
 

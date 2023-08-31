@@ -7,13 +7,15 @@ import { initialState as productsInitialState } from '../../store/products/produ
 import { initialState as productCardInitialState } from '../../store/product-card/product-card';
 import { initialState as bannerInitialState } from '../../store/banner/banner';
 import { initialState as reviewsCardInitialState } from '../../store/reviews/reviews';
+import { initialState as basketCardInitialState } from '../../store/basket/basket';
 import { NameSpace } from '../../consts';
 const mockStore = configureMockStore();
 const store = mockStore({
   [NameSpace.Products]: {...productsInitialState},
   [NameSpace.Banner]: {...bannerInitialState},
   [NameSpace.ProductCard]: {...productCardInitialState},
-  [NameSpace.Reviews]: {...reviewsCardInitialState}
+  [NameSpace.Reviews]: {...reviewsCardInitialState},
+  [NameSpace.Basket]: {...basketCardInitialState}
 });
 store.dispatch = jest.fn();
 window.scrollTo = jest.fn();

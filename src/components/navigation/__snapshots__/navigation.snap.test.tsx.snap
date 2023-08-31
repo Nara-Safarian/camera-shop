@@ -45,7 +45,7 @@ exports[`Navigation snapshot should be rendered correctly 1`] = `
           >
             <a
               class="main-nav__link"
-              href="#"
+              href="/"
             >
               Гарантии
             </a>
@@ -55,7 +55,7 @@ exports[`Navigation snapshot should be rendered correctly 1`] = `
           >
             <a
               class="main-nav__link"
-              href="#"
+              href="/"
             >
               Доставка
             </a>
@@ -65,7 +65,7 @@ exports[`Navigation snapshot should be rendered correctly 1`] = `
           >
             <a
               class="main-nav__link"
-              href="#"
+              href="/"
             >
               О компании
             </a>
@@ -121,7 +121,7 @@ exports[`Navigation snapshot should be rendered correctly 1`] = `
       </div>
       <a
         class="header__basket-link"
-        href="#"
+        href="/orders"
       >
         <svg
           aria-hidden="true"

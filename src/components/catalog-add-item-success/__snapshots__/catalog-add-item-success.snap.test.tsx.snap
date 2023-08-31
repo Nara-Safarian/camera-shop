@@ -69,11 +69,12 @@ exports[`CatalogAddItemSuccess snapshot should be rendered correctly 1`] = `
           >
             Продолжить покупки
           </a>
-          <button
+          <a
             class="btn btn--purple modal__btn modal__btn--fit-width"
+            href="/orders"
           >
             Перейти в корзину
-          </button>
+          </a>
         </div>
         <button
           aria-label="Закрыть попап"
