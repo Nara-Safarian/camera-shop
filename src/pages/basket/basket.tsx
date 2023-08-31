@@ -56,7 +56,7 @@ function Basket(): JSX.Element {
   const handleChangePromocode = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPromocodeState((state) => ({
       ...state,
-      promocode: event.target.value.trim()
+      promocode: event.target.value.replace(/\s/g, '')
     }));
   };
 
@@ -257,7 +257,7 @@ function Basket(): JSX.Element {
                       <form action="#">
                         <div className={`custom-input ${promocodeState.isValid ? 'is-valid' : ''} ${promocodeState.isInvalid ? 'is-invalid' : ''}`}>
                           <label><span className="custom-input__label">Промокод</span>
-                            <input type="text" name="promo" placeholder="Введите промокод" onChange={handleChangePromocode} />
+                            <input type="text" name="promo" placeholder="Введите промокод" onChange={handleChangePromocode} value={promocodeState.promocode} />
                           </label>
                           <p className="custom-input__error">Промокод неверный</p>
                           <p className="custom-input__success">Промокод принят!</p>
